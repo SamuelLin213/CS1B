@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void bookinfo(){
+void bookInfo(){
   cout << "\033[2J\033[1;1H";
 
   cout << "  Serendipity Booksellers" << endl;

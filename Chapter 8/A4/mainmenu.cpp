@@ -15,10 +15,17 @@ int main(){
       cout << "4. Exit" << endl << endl << "Enter Your Choice: ";
 
       cin >> choice;
+
+      while(!(choice <= 4 && choice >= 1)){
+        cin.ignore();
+        cout << endl << "Please enter a number in the range 1 - 4. ";
+        cin >> choice;
+      }
+
     }while(!(choice <= 4 && choice >= 1));
 
 
-    if(choice == '4'){
+    if(choice == 4){
       break;
     }
 
@@ -28,7 +35,7 @@ int main(){
         cashier();
         break;
       case 2:
-        invmenu();
+        invMenu();
         break;
       case 3:
         reports();

@@ -7,8 +7,22 @@
 using namespace std;
 
 void cashier();
-void invmenu();
-void bookinfo();
+void invMenu();
+void bookInfo();
 void reports();
+
+//invmenu signatures
+void lookUpBook();
+void addBook();
+void editBook();
+void deleteBook();
+
+//reports signatures
+void repListing();
+void repWholesale();
+void repRetail();
+void repQty();
+void repCost();
+void repAge();
 
 #endif
