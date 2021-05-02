@@ -19,4 +19,4 @@ Highest Temperature: ###.## Month:July
 Lowest Temperature: ###.## Month: January
 
 
-***Use cout << "\370|; to print the degree symbol
+***Use cout << "\370" to print the degree symbol
