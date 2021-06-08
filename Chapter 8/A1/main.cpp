@@ -13,16 +13,16 @@ int main() {
     string responses;
     string ids;
     char ch;
-    double score = 0;
-    int numCorrect = 0;
-    int i = 0;
+    int points = 0;
+    double percent = 0.0;
+    char grade;
 
     ifstream inData;
     inData.open("data.txt");
 
     //store answer key
     inData >> ansKey;
-    cout << ansKey << endl;
+    cout << setw(9) << left << "Key: " << ansKey << endl;
 
     while(inData.peek()!=EOF)
     {
@@ -30,31 +30,31 @@ int main() {
         break;
       }
       inData >> ids;
-      cout << ids.length();
-      numCorrect = 0;
+      //cout << ids.length();
+      points = 0;
       inData.get(ch);
       getline(inData, responses, '\n');
 
-      for(int x = 0; x < responses.length()-1; x++)
+      for(int x = 0; x < responses.length(); x++)
       {
-        if(responses.at(x) == ' ')
+        if(responses.at(x) == ansKey.at(x))
         {
-          numCorrect += 0;
+          points += 2;
         }
-        else if(responses.at(x) == ansKey.at(x))
+        else if(responses.at(x) != ' ')
         {
-          numCorrect += 2;
-        }
-        else
-        {
-          numCorrect -= 1;
+          points -= 1;
         }
       }
-      cout << ids.length() << " " << responses.length() << " " << numCorrect << endl;
+      percent = points/40.0*100;
 
-      cout << setw(8) << ids << " " << left << setw(20) << responses << endl;
+      if(percent < 60.0) grade = 'F';
+      else if(percent < 70) grade = 'D';
+      else if (percent < 80) grade = 'C';
+      else if (percent < 90) grade = 'B';
+      else grade = 'A';
 
-      i++;
+      cout << setw(8) << ids << " " << left << setw(20) << responses << " " << points << " " << grade << endl;
     }
 
     inData.close();
