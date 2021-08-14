@@ -18,11 +18,13 @@ void reports();
 
 //invmenu signatures
 void lookUpBook(int &bookCount, string titles[], string isbns[], string authors[],
-string publishers[], string dates[], int quantities[], double wholesales[], double retails[]);
+string publishers[], string dates[], int quantities[], double wholesales[], double retails[], int code);
 void addBook(int &bookCount, string titles[], string isbns[], string authors[],
+string publishers[], string dates[], int quantities[], double wholesales[], double retails[], int code, int index);
+void editBook(int &bookCount, string titles[], string isbns[], string authors[],
 string publishers[], string dates[], int quantities[], double wholesales[], double retails[]);
-void editBook();
-void deleteBook();
+void deleteBook(int &bookCount, string titles[], string isbns[], string authors[],
+string publishers[], string dates[], int quantities[], double wholesales[], double retails[]);
 
 //reports signatures
 void repListing();
