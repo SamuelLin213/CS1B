@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void cashier(){
+void cashier(int &bookCount, bookType books[]){
   string date;
   int qty = 0;
   string isbn;

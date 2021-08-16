@@ -116,18 +116,8 @@ void lookUpBook(int &bookCount, bookType books[], int code)
             ch3 = 'n';
             cout << "Book deleted." << endl;
             bookCount--;
-            
-            for(int i = indexes[index]; i < bookCount; i++)
-            {
-              books[i].bookTitle = books[i+1].bookTitle;
-              books[i].isbn = books[i+1].isbn;
-              books[i].author = books[i+1].author;
-              books[i].publisher = books[i+1].publisher;
-              books[i].dateAdded = books[i+1].dateAdded;
-              books[i].qtyOnHand = books[i+1].qtyOnHand;
-              books[i].wholesale = books[i+1].wholesale;
-              books[i].retail = books[i+1].retail;
-            }
+
+            removeBook(books, indexes[index], bookCount);
 
             if(bookCount != 0)
             {
@@ -286,14 +276,23 @@ void addBook(int &bookCount, bookType books[], int code, int index){
           {
             if(code == 1)
             {
-              books[bookCount].bookTitle = tempTitle;
-              books[bookCount].isbn = tempISBN;
-              books[bookCount].author = tempAuthor;
-              books[bookCount].publisher = tempPublisher;
-              books[bookCount].dateAdded = tempDate;
-              books[bookCount].qtyOnHand = tempQty;
-              books[bookCount].wholesale = tempWholesale;
-              books[bookCount].retail = tempRetail;
+              setTitle(books, tempTitle, bookCount);
+              setISBN(books, tempISBN, bookCount);
+              setAuthor(books, tempAuthor, bookCount);
+              setPub(books, tempPublisher, bookCount);
+              setDateAdded(books, tempDate, bookCount);
+              setQty(books, tempQty, bookCount);
+              setWholesale(books, tempWholesale, bookCount);
+              setRetail(books, tempRetail, bookCount);
+
+              // books[bookCount].bookTitle = tempTitle;
+              // books[bookCount].isbn = tempISBN;
+              // books[bookCount].author = tempAuthor;
+              // books[bookCount].publisher = tempPublisher;
+              // books[bookCount].dateAdded = tempDate;
+              // books[bookCount].qtyOnHand = tempQty;
+              // books[bookCount].wholesale = tempWholesale;
+              // books[bookCount].retail = tempRetail;
 
               cout << "Book added!";
               cin.get();
@@ -302,14 +301,23 @@ void addBook(int &bookCount, bookType books[], int code, int index){
             }
             else if(code == 2)
             {
-              books[index].bookTitle = tempTitle;
-              books[index].isbn = tempISBN;
-              books[index].author = tempAuthor;
-              books[index].publisher = tempPublisher;
-              books[index].dateAdded = tempDate;
-              books[index].qtyOnHand = tempQty;
-              books[index].wholesale = tempWholesale;
-              books[index].retail = tempRetail;
+              setTitle(books, tempTitle, index);
+              setISBN(books, tempISBN, index);
+              setAuthor(books, tempAuthor, index);
+              setPub(books, tempPublisher, index);
+              setDateAdded(books, tempDate, index);
+              setQty(books, tempQty, index);
+              setWholesale(books, tempWholesale, index);
+              setRetail(books, tempRetail, index);
+
+              // books[index].bookTitle = tempTitle;
+              // books[index].isbn = tempISBN;
+              // books[index].author = tempAuthor;
+              // books[index].publisher = tempPublisher;
+              // books[index].dateAdded = tempDate;
+              // books[index].qtyOnHand = tempQty;
+              // books[index].wholesale = tempWholesale;
+              // books[index].retail = tempRetail;
 
               cout << "Book saved!";
               cin.get();
@@ -368,4 +376,69 @@ void deleteBook(int &bookCount, bookType books[]){
   << endl;
 
   lookUpBook(bookCount, books, 3);
+}
+
+
+void setTitle(bookType books[], string str, int index)
+{
+  books[index].bookTitle = str;
+}
+void setISBN(bookType books[], string str, int index)
+{
+  books[index].isbn = str;
+}
+void setAuthor(bookType books[], string str, int index)
+{
+  books[index].author = str;
+}
+void setPub(bookType books[], string str, int index)
+{
+  books[index].publisher = str;
+}
+void setDateAdded(bookType books[], string str, int index)
+{
+  books[index].dateAdded = str;
+}
+void setQty(bookType books[], int amount, int index)
+{
+  books[index].qtyOnHand = amount;
+}
+void setWholesale(bookType books[], double dbl, int index)
+{
+  books[index].wholesale = dbl;
+}
+void setRetail(bookType books[], double dbl, int index)
+{
+  books[index].retail = dbl;
+}
+int isEmpty(bookType books[], int index)
+{
+  if(books[index].bookTitle.at(0) == '\0')
+  {
+    return 1;
+  }
+  return 0;
+}
+void removeBook(bookType books[], int index, int count)
+{
+  for(int i = index; i < count; i++)
+  {
+    setTitle(books, books[i+1].bookTitle, i);
+    setISBN(books, books[i+1].isbn, i);
+    setAuthor(books, books[i+1].author, i);
+    setPub(books, books[i+1].publisher, i);
+    setDateAdded(books, books[i+1].dateAdded, i);
+    setQty(books, books[i+1].qtyOnHand, i);
+    setWholesale(books, books[i+1].wholesale, i);
+    setRetail(books, books[i+1].retail, i);
+
+    // books[i].bookTitle = books[i+1].bookTitle;
+    // books[i].isbn = books[i+1].isbn;
+    // books[i].author = books[i+1].author;
+    // books[i].publisher = books[i+1].publisher;
+    // books[i].dateAdded = books[i+1].dateAdded;
+    // books[i].qtyOnHand = books[i+1].qtyOnHand;
+    // books[i].wholesale = books[i+1].wholesale;
+    // books[i].retail = books[i+1].retail;
+  }
 }

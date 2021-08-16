@@ -36,7 +36,7 @@ int main(){
     switch(choice)
     {
       case 1:
-        cashier();
+        cashier(count, books);
         break;
       case 2:
         invMenu(count, books);
