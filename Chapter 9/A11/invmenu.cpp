@@ -116,16 +116,17 @@ void lookUpBook(int &bookCount, bookType books[], int code)
             ch3 = 'n';
             cout << "Book deleted." << endl;
             bookCount--;
+            
             for(int i = indexes[index]; i < bookCount; i++)
             {
-              books[bookCount].bookTitle = books[bookCount+1].bookTitle;
-              books[bookCount].isbn = books[bookCount+1].isbn;
-              books[bookCount].author = books[bookCount+1].author;
-              books[bookCount].publisher = books[bookCount+1].publisher;
-              books[bookCount].dateAdded = books[bookCount+1].dateAdded;
-              books[bookCount].qtyOnHand = books[bookCount+1].qtyOnHand;
-              books[bookCount].wholesale = books[bookCount+1].wholesale;
-              books[bookCount].retail = books[bookCount+1].retail;
+              books[i].bookTitle = books[i+1].bookTitle;
+              books[i].isbn = books[i+1].isbn;
+              books[i].author = books[i+1].author;
+              books[i].publisher = books[i+1].publisher;
+              books[i].dateAdded = books[i+1].dateAdded;
+              books[i].qtyOnHand = books[i+1].qtyOnHand;
+              books[i].wholesale = books[i+1].wholesale;
+              books[i].retail = books[i+1].retail;
             }
 
             if(bookCount != 0)

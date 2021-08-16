@@ -1,15 +1,7 @@
 #include "functions.h"
 
 int main(){
-  //book arrays
-  // string bookTitle[DB_SIZE];
-  // string isbn[DB_SIZE];
-  // string author[DB_SIZE];
-  // string publisher[DB_SIZE];
-  // string dateAdded[DB_SIZE];
-  // int qtyOnHand[DB_SIZE];
-  // double wholesale[DB_SIZE];
-  // double retail[DB_SIZE];
+  //book struct
   bookType books[DB_SIZE];
 
   int choice = 0;
