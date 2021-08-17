@@ -48,7 +48,11 @@ void cashier(int &bookCount, bookType books[]){
     cout << endl;
     index = lookUpBook(bookCount, books, 4, isbn);
 
-    if(index != -1)
+    if(index < 0)
+    {
+      cin.get();
+    }
+    else if(index != -1)
     {
       repeat = false;
       for(int i = 0; i < (int)indexes.size(); i++)
@@ -86,8 +90,12 @@ void cashier(int &bookCount, bookType books[]){
 
       cout << "\033[2J\033[1;1H";
 
+      time_t now = time(0);
+      tm *ltm = localtime(&now);
+
       cout << "Serendipity Book Sellers" << endl << endl;
-      cout << "Date: " << date << endl << endl;
+      cout << "Date: " << date << "    Time: " << 5+ltm->tm_hour << ":"
+      << 30+ltm->tm_min << ":" << ltm->tm_sec << endl << endl;
       cout << setw(4) << left << "Qty" << setw(14) << "ISBN" << setw(30) << "Title"
       << setw(15) << "Price" << setw(7) << "Total" << endl;
       cout << setw(70) << setfill('-') << "" << setfill(' ') << endl;
