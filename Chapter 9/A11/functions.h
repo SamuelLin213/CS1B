@@ -28,7 +28,7 @@ string date, int qty, double wholesale, double retail);
 void reports();
 
 //invmenu signatures
-void lookUpBook(int &bookCount, bookType books[], int code);
+int lookUpBook(int &bookCount, bookType books[], int code, string key);
 void addBook(int &bookCount, bookType books[], int code, int index);
 void editBook(int &bookCount, bookType books[]);
 void deleteBook(int &bookCount, bookType books[]);

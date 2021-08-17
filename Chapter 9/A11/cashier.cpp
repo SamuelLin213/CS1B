@@ -9,6 +9,7 @@ void cashier(int &bookCount, bookType books[]){
   double total = 0.0;
   double tax = 0.0;
   char ch;
+  int index = -1;
 
   do{
     cout << "\033[2J\033[1;1H";
@@ -28,35 +29,46 @@ void cashier(int &bookCount, bookType books[]){
     cout << "Price: ";
     cin >> price;
 
-    cout << "\033[2J\033[1;1H";
+    cout << endl;
+    index = lookUpBook(bookCount, books, 4, isbn);
 
-    total = qty * price;
-    tax = 0.06*total;
+    if(index != -1)
+    {
+      books[index].qtyOnHand -= qty;
 
-    cout << "Serendipity Book Sellers" << endl << endl;
-    cout << "Date: " << date << endl << endl;
-    cout << setw(4) << left << "Qty" << setw(14) << "ISBN" << setw(30) << "Title"
-    << setw(15) << "Price" << setw(7) << "Total" << endl;
-    cout << setw(70) << setfill('-') << "" << setfill(' ') << endl;
+      cout << "\033[2J\033[1;1H";
 
-    cout << setw(4) << left << qty << setw(14) << isbn << setw(30) << title
-    << "$" << right << setw(6) << price << " " << setw(8) << "$" << setw(6)
-    << fixed << setprecision(2) << right << total << endl;
+      total = qty * price;
+      tax = 0.06*total;
 
-    cout << endl << endl;
+      cout << "Serendipity Book Sellers" << endl << endl;
+      cout << "Date: " << date << endl << endl;
+      cout << setw(4) << left << "Qty" << setw(14) << "ISBN" << setw(30) << "Title"
+      << setw(15) << "Price" << setw(7) << "Total" << endl;
+      cout << setw(70) << setfill('-') << "" << setfill(' ') << endl;
 
-    cout << left << setw(13) << "" << setw(8) << "Subtotal" << right << setw(42)
-    << "" << "$" << setw(6) << fixed << setprecision(2) << total << endl;
-    cout << left << setw(13) << "" << setw(8) << "Tax" << right << setw(42)
-    << "" << "$" << setw(6) << fixed << setprecision(2) << tax << endl;
-    cout << left << setw(13) << "" << setw(8) << "Total" << right << setw(42)
-    << "" << "$" << setw(6) << fixed << setprecision(2) << (tax + total) << endl;
+      cout << setw(4) << left << qty << setw(14) << books[index].isbn << setw(30) << books[index].title
+      << "$" << right << setw(6) << price << " " << setw(8) << "$" << setw(6)
+      << fixed << setprecision(2) << right << total << endl;
 
-    cout << endl << "Thank you for Shopping at Serendipity!" << endl;
+      cout << endl << endl;
 
-    cout << "Enter another transaction?(y/n) ";
+      cout << left << setw(13) << "" << setw(8) << "Subtotal" << right << setw(42)
+      << "" << "$" << setw(6) << fixed << setprecision(2) << total << endl;
+      cout << left << setw(13) << "" << setw(8) << "Tax" << right << setw(42)
+      << "" << "$" << setw(6) << fixed << setprecision(2) << tax << endl;
+      cout << left << setw(13) << "" << setw(8) << "Total" << right << setw(42)
+      << "" << "$" << setw(6) << fixed << setprecision(2) << (tax + total) << endl;
 
-    cin.ignore();
-    cin >> ch;
+      cout << endl << "Thank you for Shopping at Serendipity!" << endl;
+
+      cout << "Enter another transaction?(y/n) ";
+
+      cin.ignore();
+      cin >> ch;
+    }
+    else if(index == -1)
+    {
+      break;
   }while(ch != 'n' && ch != 'N');
 }

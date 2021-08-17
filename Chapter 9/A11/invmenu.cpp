@@ -30,7 +30,7 @@ void invMenu(int &bookCount, bookType books[]){
     switch(input)
     {
       case 1:
-        lookUpBook(bookCount, books, 1);
+        lookUpBook(bookCount, books, 1, "");
         break;
       case 2:
         addBook(bookCount, books, 1, 0);
@@ -45,20 +45,26 @@ void invMenu(int &bookCount, bookType books[]){
   }
 }
 
-void lookUpBook(int &bookCount, bookType books[], int code)
+int lookUpBook(int &bookCount, bookType books[], int code, string key)
 {
   string search = "";
   vector<int> indexes;
   char ch = 'z';
-  char ch2 = 'y';
+  char ch2 = 'q';
   char ch3 = 'x';
   bool done = false;
   int index = 0;
 
-  INFO:cin.ignore();
-  cout << endl << "Search for a book: ";
-  getline(cin, search);
-
+  INFO:if(code != 4)
+  {
+    cin.ignore();
+    cout << endl << "Search for a book: ";
+    getline(cin, search);
+  }
+  else if(code == 4)
+  {
+    search = key;
+  }
   for(int i = 0; i < bookCount; i++)
   {
     if(books[i].bookTitle.find(search) != string::npos || books[i].isbn.find(search) != string::npos
@@ -72,6 +78,10 @@ void lookUpBook(int &bookCount, bookType books[], int code)
   {
     for(int x = 0; x < int(indexes.size()); x++)
     {
+      if(code == 4)
+      {
+        return indexes[index];
+      }
       do{
         cout << endl << "Result: " << books[indexes[x]].bookTitle << ", " << books[indexes[x]].isbn << endl;
         cout << "View this book record? <Y/N>: ";
@@ -146,10 +156,12 @@ void lookUpBook(int &bookCount, bookType books[], int code)
     }
   }
   else{
+    cin.ignore();
     cout << "Sorry. No match found.";
     cin.get();
   }
   indexes.clear();
+  return -1;
 }
 void addBook(int &bookCount, bookType books[], int code, int index){
   if(bookCount < 20)
@@ -366,7 +378,7 @@ void editBook(int &bookCount, bookType books[]){
   cout << " Database size: " << DB_SIZE << " Current book count: " << bookCount
   << endl;
 
-  lookUpBook(bookCount, books, 2);
+  lookUpBook(bookCount, books, 2, "");
 }
 void deleteBook(int &bookCount, bookType books[]){
   cout << "\033[2J\033[1;1H";
@@ -375,7 +387,7 @@ void deleteBook(int &bookCount, bookType books[]){
   cout << " Database size: " << DB_SIZE << " Current book count: " << bookCount
   << endl;
 
-  lookUpBook(bookCount, books, 3);
+  lookUpBook(bookCount, books, 3, "");
 }
 
 
