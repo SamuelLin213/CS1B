@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void cashier(int &bookCount, bookType books[]){
+void cashier(bookType books[]){
   string date;
   int qty = 0;
   string isbn;
@@ -46,7 +46,7 @@ void cashier(int &bookCount, bookType books[]){
     cin >> price;
 
     cout << endl;
-    index = lookUpBook(bookCount, books, 4, isbn);
+    index = lookUpBook(books, 4, isbn);
 
     if(index < 0)
     {
@@ -57,7 +57,7 @@ void cashier(int &bookCount, bookType books[]){
       repeat = false;
       for(int i = 0; i < (int)indexes.size(); i++)
       {
-        if(books[indexes[i]].isbn == isbn)
+        if(books[indexes[i]].getISBN() == isbn)
         {
           repeatIndex = i;
           repeat = true;
@@ -105,8 +105,8 @@ void cashier(int &bookCount, bookType books[]){
         total = quantities[i] * prices[i];
         subtotal += total;
 
-        cout << setw(4) << left << quantities[i] << setw(14) << books[indexes[i]].isbn
-        << setw(30) << books[indexes[i]].bookTitle << "$" << right << setw(6)
+        cout << setw(4) << left << quantities[i] << setw(14) << books[indexes[i]].getISBN()
+        << setw(30) << books[indexes[i]].getTitle() << "$" << right << setw(6)
         << fixed << setprecision(2) << prices[i] << " " << setw(8) << "$" << setw(6) << fixed
         << setprecision(2) << right << total << endl;
       }
@@ -134,7 +134,7 @@ void cashier(int &bookCount, bookType books[]){
         purchase = 'n';
         for(int i = 0; i < (int)indexes.size(); i++)
         {
-          books[indexes[i]].qtyOnHand -= quantities[i];
+          books[indexes[i]].setQtyOnHand(books[indexes[i]].getQtyOnHand() - quantities[i]);
         }
       }
 

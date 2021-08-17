@@ -1,11 +1,12 @@
 #include "functions.h"
 
+int bookType::bookCount = 0;
+
 int main(){
   //book struct
   bookType books[DB_SIZE];
 
   int choice = 0;
-  int count = 0;
 
   while(choice != 4){
     do{
@@ -36,10 +37,10 @@ int main(){
     switch(choice)
     {
       case 1:
-        cashier(count, books);
+        cashier(books);
         break;
       case 2:
-        invMenu(count, books);
+        invMenu(books);
         break;
       case 3:
         reports();
