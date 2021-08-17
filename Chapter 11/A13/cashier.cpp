@@ -14,6 +14,7 @@ void cashier(int &bookCount, bookType books[]){
   char another = 'z';
   bool repeat = false;
   int repeatIndex = -1;
+  char purchase = 'n';
 
   vector<int> quantities;
   vector<int> indexes;
@@ -69,7 +70,7 @@ void cashier(int &bookCount, bookType books[]){
         prices.push_back(price);
       }
 
-      books[index].qtyOnHand -= qty;
+      //books[index].qtyOnHand -= qty;
 
       cout << "Do you want to add another book to this purchase? <y/n> ";
       another = 'z';
@@ -116,9 +117,20 @@ void cashier(int &bookCount, bookType books[]){
       cout << left << setw(13) << "" << setw(8) << "Total" << right << setw(42)
       << "" << "$" << setw(6) << fixed << setprecision(2) << (tax + subtotal) << endl;
 
-      cout << endl << "Thank you for Shopping at Serendipity!" << endl;
+      cout << endl << "Confirm purchase? <y/n> ";
+      cin >> purchase;
 
-      cout << "Enter another transaction?(y/n) ";
+      if(toupper(purchase) == 'Y')
+      {
+        cout << endl << "Thank you for Shopping at Serendipity!" << endl;
+        purchase = 'n';
+        for(int i = 0; i < (int)indexes.size(); i++)
+        {
+          books[indexes[i]].qtyOnHand -= quantities[i];
+        }
+      }
+
+      cout << endl <<  "Enter another transaction?(y/n) ";
 
       cin.ignore();
       cin >> ch;
