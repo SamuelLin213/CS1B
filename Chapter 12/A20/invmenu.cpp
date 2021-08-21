@@ -153,7 +153,7 @@ int lookUpBook(bookType books[], int code, string key)
     if(!done)
     {
       cout << endl << "Sorry. No match found.";
-      // cin.ignore();
+      cin.ignore();
       cin.get();
     }
   }

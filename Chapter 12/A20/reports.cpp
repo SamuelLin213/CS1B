@@ -75,17 +75,35 @@ void repListing(bookType books[]){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(30) << "Title" << setw(10) << "ISBN" << setw(15) <<
+  cout << left << setw(30) << "Title" << setw(11) << "ISBN" << setw(15) <<
   "Author" << setw(15) << "Publisher" << setw(11) << "Date added" << setw(8)
   << "Qty O/H" << setw(15) << "Wholesale cost" << setw(12) << "Retail price" << endl;
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
+    string tempTitle = books[i].getTitle();
+    string tempAuthor = books[i].getAuthor();
+    string tempPub = books[i].getPub();
+
+    if(books[i].getTitle().length() > 29)
+    {
+      tempTitle = tempTitle.substr(0, 29);
+    }
+    if(books[i].getAuthor().length() > 14)
+    {
+      tempAuthor = tempAuthor.substr(0, 14);
+    }
+    if(books[i].getPub().length() > 14)
+    {
+      tempPub = tempPub.substr(0, 14);
+    }
+
     tenth = false;
-    cout << left << setw(30) << books[i].getTitle() << setw(10) << books[i].getISBN()
-    << setw(15) << books[i].getAuthor() << setw(15) << books[i].getPub()
-    << setw(11) << books[i].getDateAdded() << right << setw(7) << books[i].getQtyOnHand()
-    << setw(15) << books[i].getWholesale() << setw(13) << books[i].getRetail() << endl;
+    cout << left << setw(30) << tempTitle << setw(11) << books[i].getISBN()
+    << setw(15) << tempAuthor << setw(15) << tempPub
+    << setw(11) << books[i].getDateAdded() << right << setw(7) << books[i].getQtyOnHand() << setw(6) << ""
+    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i].getWholesale() << setfill(' ') << setw(6) 
+    << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << books[i].getRetail() << endl << setfill(' ');
     if((i+1)%10 == 0)
     {
       tenth = true;
@@ -107,7 +125,7 @@ void repListing(bookType books[]){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(30) << "Title" << setw(10) << "ISBN" << setw(15) <<
+      cout << left << setw(30) << "Title" << setw(11) << "ISBN" << setw(15) <<
       "Author" << setw(15) << "Publisher" << setw(11) << "Date added" << setw(8)
       << "Qty O/H" << setw(15) << "Wholesale cost" << setw(12) << "Retail price" << endl;
     }
@@ -123,7 +141,6 @@ void repWholesale(bookType books[]){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
-  bool tenth = false;
   int bookNum = books->getBookCount();
   double pages = ceil(bookNum/10.0);
 
@@ -147,13 +164,33 @@ void repWholesale(bookType books[]){
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    tenth = false;
-    cout << left << setw(50) << books[i].getTitle() << setw(15) << books[i].getISBN() << setw(12)
-    << right << books[i].getQtyOnHand() << setw(15) << books[i].getWholesale() << endl;
+    string tempTitle = books[i].getTitle();
+    if(books[i].getTitle().length() > 49)
+    {
+      tempTitle = tempTitle.substr(0, 49);
+    }
+
+    cout << left << setw(50) << tempTitle << setw(15) << books[i].getISBN() << setw(12)
+    << right << books[i].getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << books[i].getWholesale() << endl << setfill(' ');
+
+    if(i+1 == bookType::getBookCount())
+    {
+      double wholesaleTotal = 0.0;
+
+      for(int x = 0; x < bookType::getBookCount(); x++)
+      {
+        wholesaleTotal += (books[x].getQtyOnHand() * books[x].getWholesale());
+      }
+
+      cout << endl << "Total wholesale value: $" << fixed << setprecision(2) << wholesaleTotal;
+      cin.get();
+      break;
+    }
 
     if((i+1)%10 == 0)
     {
-      tenth = true;
+
       if(i == 9)
       {
           cin.ignore();
@@ -177,17 +214,12 @@ void repWholesale(bookType books[]){
     }
 
   }
-  if(!tenth)
-  {
-    cin.get();
-  }
 }
 
 void repRetail(bookType books[]){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
-  bool tenth = false;
   int bookNum = books->getBookCount();
   double pages = ceil(bookNum/10.0);
 
@@ -211,13 +243,33 @@ void repRetail(bookType books[]){
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    tenth = false;
-    cout << left << setw(50) << books[i].getTitle() << setw(15) << books[i].getISBN() << setw(12)
-    << right << books[i].getQtyOnHand() << setw(15) << books[i].getRetail() << endl;
+    string tempTitle = books[i].getTitle();
+    if(books[i].getTitle().length() > 49)
+    {
+      tempTitle = tempTitle.substr(0, 49);
+    }
+
+    cout << left << setw(50) << tempTitle << setw(15) << books[i].getISBN() << setw(12)
+    << right << books[i].getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << books[i].getRetail() << endl << setfill(' ');
+
+    if(i+1 == bookType::getBookCount())
+    {
+      double retailTotal = 0.0;
+
+      for(int x = 0; x < bookType::getBookCount(); x++)
+      {
+        retailTotal += (books[x].getQtyOnHand() * books[x].getRetail());
+      }
+
+      cout << endl << "Total retail value: $" << fixed << setprecision(2) << retailTotal;
+      cin.get();
+      break;
+    }
+
 
     if((i+1)%10 == 0)
     {
-      tenth = true;
       if(i == 9)
       {
           cin.ignore();
@@ -240,10 +292,6 @@ void repRetail(bookType books[]){
       << right << "Qty O/H" << setw(15) << "Retail cost" << endl;
     }
 
-  }
-  if(!tenth)
-  {
-    cin.get();
   }
 }
 void repQty(bookType books[]){
