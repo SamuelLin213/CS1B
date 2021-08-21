@@ -4,8 +4,8 @@ int bookType::bookCount = 0;
 
 int main(){
   //book struct
-  bookType books[DB_SIZE];
-  //bookType **books = new bookType*[DB_SIZE];
+  //bookType books[DB_SIZE];
+  bookType **books = new bookType*[DB_SIZE];
 
   int choice = 0;
 
@@ -48,5 +48,11 @@ int main(){
         break;
     }
   }
+
+  for(int i = 0; i < bookType::getBookCount(); i++)
+  {
+    delete books[i];
+  }
+  delete [] books;
 
 }

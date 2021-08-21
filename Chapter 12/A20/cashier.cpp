@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void cashier(bookType books[]){
+void cashier(bookType **books){
   string date;
   int qty = 0;
   string isbn;
@@ -57,7 +57,7 @@ void cashier(bookType books[]){
       repeat = false;
       for(int i = 0; i < (int)indexes.size(); i++)
       {
-        if(books[indexes[i]].getISBN() == isbn)
+        if(books[indexes[i]]->getISBN() == isbn)
         {
           repeatIndex = i;
           repeat = true;
@@ -74,7 +74,7 @@ void cashier(bookType books[]){
         prices.push_back(price);
       }
 
-      //books[index].qtyOnHand -= qty;
+      //books[index]->qtyOnHand -= qty;
 
       cout << "Do you want to add another book to this purchase? <y/n> ";
       another = 'z';
@@ -105,12 +105,12 @@ void cashier(bookType books[]){
         total = quantities[i] * prices[i];
         subtotal += total;
 
-        cout << setw(4) << left << quantities[i] << setw(14) << books[indexes[i]].getISBN()
-        << setw(30) << books[indexes[i]].getTitle() << "$" << right << setw(6)
+        cout << setw(4) << left << quantities[i] << setw(14) << books[indexes[i]]->getISBN()
+        << setw(30) << books[indexes[i]]->getTitle() << "$" << right << setw(6)
         << fixed << setprecision(2) << prices[i] << " " << setw(8) << "$" << setw(6) << fixed
         << setprecision(2) << right << total << endl;
       }
-      // cout << setw(4) << left << qty << setw(14) << books[index].isbn << setw(30) << books[index].title
+      // cout << setw(4) << left << qty << setw(14) << books[index]->isbn << setw(30) << books[index]->title
       // << "$" << right << setw(6) << price << " " << setw(8) << "$" << setw(6)
       // << fixed << setprecision(2) << right << total << endl;
 
@@ -134,7 +134,7 @@ void cashier(bookType books[]){
         purchase = 'n';
         for(int i = 0; i < (int)indexes.size(); i++)
         {
-          books[indexes[i]].setQtyOnHand(books[indexes[i]].getQtyOnHand() - quantities[i]);
+          books[indexes[i]]->setQtyOnHand(books[indexes[i]]->getQtyOnHand() - quantities[i]);
         }
       }
 

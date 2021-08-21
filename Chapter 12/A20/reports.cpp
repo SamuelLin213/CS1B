@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void reports(bookType books[]){
+void reports(bookType **books){
   int input = 10;
 
   while(input != 7)
@@ -52,12 +52,12 @@ void reports(bookType books[]){
   }
 }
 
-void repListing(bookType books[]){
+void repListing(bookType **books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
   bool tenth = false;
-  int bookNum = books->getBookCount();
+  int bookNum = bookType::getBookCount();
   double pages = ceil(bookNum/10.0);
 
   if(bookType::getBookCount() > 0)
@@ -81,29 +81,29 @@ void repListing(bookType books[]){
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i].getTitle();
-    string tempAuthor = books[i].getAuthor();
-    string tempPub = books[i].getPub();
+    string tempTitle = books[i]->getTitle();
+    string tempAuthor = books[i]->getAuthor();
+    string tempPub = books[i]->getPub();
 
-    if(books[i].getTitle().length() > 29)
+    if(books[i]->getTitle().length() > 29)
     {
       tempTitle = tempTitle.substr(0, 29);
     }
-    if(books[i].getAuthor().length() > 14)
+    if(books[i]->getAuthor().length() > 14)
     {
       tempAuthor = tempAuthor.substr(0, 14);
     }
-    if(books[i].getPub().length() > 14)
+    if(books[i]->getPub().length() > 14)
     {
       tempPub = tempPub.substr(0, 14);
     }
 
     tenth = false;
-    cout << left << setw(30) << tempTitle << setw(11) << books[i].getISBN()
+    cout << left << setw(30) << tempTitle << setw(11) << books[i]->getISBN()
     << setw(15) << tempAuthor << setw(15) << tempPub
-    << setw(11) << books[i].getDateAdded() << right << setw(7) << books[i].getQtyOnHand() << setw(6) << ""
-    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i].getWholesale() << setfill(' ') << setw(6) 
-    << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << books[i].getRetail() << endl << setfill(' ');
+    << setw(11) << books[i]->getDateAdded() << right << setw(7) << books[i]->getQtyOnHand() << setw(6) << ""
+    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i]->getWholesale() << setfill(' ') << setw(6) 
+    << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
     if((i+1)%10 == 0)
     {
       tenth = true;
@@ -137,11 +137,11 @@ void repListing(bookType books[]){
   }
 }
 
-void repWholesale(bookType books[]){
+void repWholesale(bookType **books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
-  int bookNum = books->getBookCount();
+  int bookNum = bookType::getBookCount();
   double pages = ceil(bookNum/10.0);
 
   if(bookType::getBookCount() > 0)
@@ -164,15 +164,15 @@ void repWholesale(bookType books[]){
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i].getTitle();
-    if(books[i].getTitle().length() > 49)
+    string tempTitle = books[i]->getTitle();
+    if(books[i]->getTitle().length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(15) << books[i].getISBN() << setw(12)
-    << right << books[i].getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
-    << fixed << setprecision(2) << books[i].getWholesale() << endl << setfill(' ');
+    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN() << setw(12)
+    << right << books[i]->getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << books[i]->getWholesale() << endl << setfill(' ');
 
     if(i+1 == bookType::getBookCount())
     {
@@ -180,7 +180,7 @@ void repWholesale(bookType books[]){
 
       for(int x = 0; x < bookType::getBookCount(); x++)
       {
-        wholesaleTotal += (books[x].getQtyOnHand() * books[x].getWholesale());
+        wholesaleTotal += (books[x]->getQtyOnHand() * books[x]->getWholesale());
       }
 
       cout << endl << "Total wholesale value: $" << fixed << setprecision(2) << wholesaleTotal;
@@ -216,11 +216,11 @@ void repWholesale(bookType books[]){
   }
 }
 
-void repRetail(bookType books[]){
+void repRetail(bookType **books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
-  int bookNum = books->getBookCount();
+  int bookNum = bookType::getBookCount();
   double pages = ceil(bookNum/10.0);
 
   if(bookType::getBookCount() > 0)
@@ -243,15 +243,15 @@ void repRetail(bookType books[]){
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i].getTitle();
-    if(books[i].getTitle().length() > 49)
+    string tempTitle = books[i]->getTitle();
+    if(books[i]->getTitle().length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(15) << books[i].getISBN() << setw(12)
-    << right << books[i].getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
-    << fixed << setprecision(2) << books[i].getRetail() << endl << setfill(' ');
+    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN() << setw(12)
+    << right << books[i]->getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
 
     if(i+1 == bookType::getBookCount())
     {
@@ -259,7 +259,7 @@ void repRetail(bookType books[]){
 
       for(int x = 0; x < bookType::getBookCount(); x++)
       {
-        retailTotal += (books[x].getQtyOnHand() * books[x].getRetail());
+        retailTotal += (books[x]->getQtyOnHand() * books[x]->getRetail());
       }
 
       cout << endl << "Total retail value: $" << fixed << setprecision(2) << retailTotal;
@@ -294,17 +294,17 @@ void repRetail(bookType books[]){
 
   }
 }
-void repQty(bookType books[]){
+void repQty(bookType **books){
   cin.ignore();
   cout << endl << "You selected Listing by Quantity.";
   cin.get();
 }
-void repCost(bookType books[]){
+void repCost(bookType **books){
   cin.ignore();
   cout << endl << "You selected Listing by Cost.";
   cin.get();
 }
-void repAge(bookType books[]){
+void repAge(bookType **books){
   cin.ignore();
   cout << endl << "You selected Listing by Age.";
   cin.get();
