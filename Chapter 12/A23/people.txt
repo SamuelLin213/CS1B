@@ -1,0 +1,74 @@
+2
+1
+Allen
+Anonymous
+Somewhere in Irvine
+Unknown
+50
+M
+2
+2
+Billy
+Bad A$$
+84 Gregory St. Muskego, WI 53150
+22/02/2005
+55
+M
+DMTIH
+2.1
+Sophomore
+2
+2
+Suzie
+Smarty Pants
+95 Cedar Ave. Mason City, IA 14295
+10/09/2009
+49
+F
+MJCQJ
+3.8
+Sophomore
+2
+2
+Chatty
+Kathy
+9124 Grandrose Rd. N. Imsted, OH 44070
+10/11/2005
+50
+F
+8ZIX6
+2.9
+Freshman
+2
+2
+Johnny
+Rocket
+3 Baker St. Trenton, NJ 08610
+11/04/2002
+52
+M
+G3F58
+3.9
+Junior
+2
+3
+Mad
+Scientist
+38 Mill Ave. Owatonna, MN 55060
+22/02/2005
+48
+M
+URJYRLU1
+Ph D. Computer Science
+Computer Science
+2
+3
+Know
+It All
+7 Oxford St. Beltsville, MD 20705
+10/11/2005
+40
+M
+PPG7Q5EO
+Ph D. Computer Science
+Computer Science
