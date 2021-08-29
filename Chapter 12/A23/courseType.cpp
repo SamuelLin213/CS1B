@@ -119,7 +119,10 @@ bool courseType::courseType::addStudent(studentType *other)
 }
 void courseType::printStudents()
 {
-
+  for(int i = 0; i < enrolled; i++)
+  {
+    cout << students[i].getFName() << " " << students[i].getLName() << endl;
+  }
 }
 string courseType::getStatus()
 {
