@@ -368,13 +368,13 @@ void repAge(bookType **books){
   cout << endl << "You selected Listing by Age.";
   cin.get();
 }
-// template <typename T>
-void sortBooks(bookType** books)
+template <typename T>
+void sortBooks(T** books)
 {
-  for(int i = 0; i < bookType::getBookCount()-1; i++)
+  for(int i = 0; i < T::getBookCount()-1; i++)
   {
     int largestIndex = i;
-    for(int x = i+1; x < bookType::getBookCount(); x++)
+    for(int x = i+1; x < T::getBookCount(); x++)
     {
       if(*books[x] > *books[largestIndex])
       {
@@ -383,8 +383,5 @@ void sortBooks(bookType** books)
     }
     if(largestIndex != i)
       swap(*books[i], *books[largestIndex]);
-    // bookType* temp = &books[i];
-    // books[i] = &books[largestIndex];
-    // books[largestIndex] = &temp;
   }
 }

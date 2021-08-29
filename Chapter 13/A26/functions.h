@@ -31,7 +31,7 @@ void repAge(bookType **books);
 int isEmpty(bookType **books, int index);
 void removeBook(bookType **books, int index);
 
-// template <typename T>
-void sortBooks(bookType** books);
+template <typename T>
+void sortBooks(T** books);
 
 #endif
