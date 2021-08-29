@@ -5,6 +5,7 @@
 #include "collegeType.h"
 #include <vector>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 string collegeType::name = "Saddleback College";
@@ -66,7 +67,6 @@ int main()
           cin.ignore();
           getline(cin, tempCourse);
           cout << "Enter title: ";
-          cin.ignore();
           getline(cin, tempTitle);
           cout << "Enter days: ";
           cin >> tempDays;
@@ -74,7 +74,7 @@ int main()
           cin.ignore();
           getline(cin, tempTime);
           cout << "Enter room: ";
-          cin.ignore();
+          // cin.ignore();
           getline(cin, tempRoom);
           cout << "Enter enrollment cap: ";
           cin >> tempCap;
@@ -100,9 +100,9 @@ int main()
           double tempGpa;
           string tempClass;
         
-          int choice = 0;
+          int personChoice = 0;
 
-          while(choice < 1 || choice > 3)
+          while(personChoice < 1 || personChoice > 3)
           {
             cout << "\033[2J\033[1;1H";
             cout << "Creating new person" << endl << endl;
@@ -112,10 +112,10 @@ int main()
             cout << "<3> Professor" << endl << endl;
 
             cout << "Choice (1-3): ";
-            cin >> choice;
+            cin >> personChoice;
           }
 
-          switch(choice)
+          switch(personChoice)
           {
             case 1:
               cout << "\033[2J\033[1;1H";
@@ -127,7 +127,7 @@ int main()
               cin.ignore();
               getline(cin, tempLast);
               cout << "Enter address: ";
-              cin.ignore();
+              // cin.ignore();
               getline(cin, tempAddr);
               cout << "Enter date of birth(dd/mm/yyyy): ";
               cin >> tempDate;
@@ -155,7 +155,7 @@ int main()
               cin.ignore();
               getline(cin, tempLast);
               cout << "Enter address: ";
-              cin.ignore();
+              // cin.ignore();
               getline(cin, tempAddr);
               cout << "Enter date of birth(dd/mm/yyyy): ";
               cin >> tempDate;
@@ -189,7 +189,7 @@ int main()
               cin.ignore();
               getline(cin, tempLast);
               cout << "Enter address: ";
-              cin.ignore();
+              // cin.ignore();
               getline(cin, tempAddr);
               cout << "Enter date of birth(dd/mm/yyyy): ";
               cin >> tempDate;
@@ -200,12 +200,13 @@ int main()
               cout << "Enter employee ID: ";
               cin >> tempEmployeeId;
               cout << "Enter department: ";
-              cin.ignore();
+              cin.ignore(); 
               getline(cin, tempDepart);
               cout << "Enter degree: ";
-              cin.ignore();
+              //cin.ignore();
               getline(cin, tempDegree);
-
+              
+              
               people.push_back(new professorType(tempFirst, tempLast, tempAddr,
                 tempHeight, tempDate, tempGender, tempEmployeeId, tempDepart, tempDegree));
               numPpl++;
@@ -216,12 +217,210 @@ int main()
         }
         break;
       case 3:
+        {
+          ENROLL:bool found1 = false;
+          bool found2 = false;
+          int courseIndex;
+          int studentIndex;
+          char again = 'n';
+          string tempId;
+          string tempCourse;
+
+          cout << "\033[2J\033[1;1H";
+          cout << "Enrolling student in course: " << endl << endl;
+          cout << "Enter student id: ";
+          cin >> tempId;
+          cout << "Enter course id: ";
+          cin >> tempCourse;
+
+          for(int i = 0; i < (int)courses.size(); i++)
+          {
+            if(courses[i]->getSectionId() == tempCourse)
+            {
+              courseIndex = i;
+              found1 = true;
+              break;
+            }
+          }
+          for(int i = 0; i < (int)people.size(); i++)
+          {
+            studentType* tempStudent = dynamic_cast<studentType*>(people[i]);
+            if(tempStudent != nullptr)
+            {
+              if(tempStudent->getID() == tempId)
+              {
+                studentIndex = i;
+                found2 = true;
+                break;
+              }
+            }            
+          }
+          if(!found1)
+          {
+            cout << endl << "Course not found. Try again? ";
+            cin >> again;
+            if(toupper(again) == 'Y')
+            {
+              goto ENROLL;
+            }
+            else
+            {
+              break;
+            }
+          }
+          else if(!found2)
+          {
+            cout << endl << "Student not found. Try again? ";
+            cin >> again;
+            if(toupper(again) == 'Y')
+            {
+              goto ENROLL;
+            }
+            else
+            {
+              break;
+            }
+          }
+          else
+          {
+            if(!courses[courseIndex]->getOpen())
+            {
+              cout << endl << "Error: class full.";
+              cin.ignore();
+              cin.get();
+            }
+            else
+            {
+              dynamic_cast<studentType*>(people[studentIndex])->addCourse(courses[courseIndex]);
+              cout << endl << "Success: student enrolled in course.";
+
+              cin.ignore();
+              cin.get();
+            }
+          }
+        }
         break;
       case 4:
+        {
+          ASSIGN:bool found1 = false;
+          bool found2 = false;
+          int courseIndex;
+          int profIndex;
+          char again = 'n';
+          string tempId;
+          string tempCourse;
+
+          cout << "\033[2J\033[1;1H";
+          cout << "Assigning professor to course: " << endl << endl;
+          cout << "Enter professor id: ";
+          cin >> tempId;
+          cout << "Enter course id: ";
+          cin >> tempCourse;
+
+          for(int i = 0; i < (int)courses.size(); i++)
+          {
+            if(courses[i]->getSectionId() == tempCourse)
+            {
+              courseIndex = i;
+              found1 = true;
+              break;
+            }
+          }
+          for(int i = 0; i < (int)people.size(); i++)
+          {
+            professorType* tempProf = dynamic_cast<professorType*>(people[i]);
+            if(tempProf != nullptr)
+            {
+              if(tempProf->getEmployeeID() == tempId)
+              {
+                profIndex = i;
+                found2 = true;
+                break;
+              }
+            }            
+          }
+          if(!found1)
+          {
+            cout << endl << "Course not found. Try again? ";
+            cin >> again;
+            if(toupper(again) == 'Y')
+            {
+              goto ASSIGN;
+            }
+            else
+            {
+              break;
+            }
+          }
+          else if(!found2)
+          {
+            cout << endl << "Professor not found. Try again? ";
+            cin >> again;
+            if(toupper(again) == 'Y')
+            {
+              goto ASSIGN;
+            }
+            else
+            {
+              break;
+            }
+          }
+          else
+          {            
+            if(dynamic_cast<professorType*>(people[profIndex])->assignCourse(courses[courseIndex]))
+            {
+              cout << endl << "Success: professor assigned to course.";
+
+              cin.ignore();
+              cin.get();
+            }
+            else
+            {
+              cout << endl << "Error: course limit exceeded for professor.";
+
+              cin.ignore();
+              cin.get();
+            }            
+          }
+        }
         break;
       case 5:
+        cout << "\033[2J\033[1;1H";
+        
+        cout << collegeType::getName() << " list of people" << endl << endl;
+
+        cout << left << setw(25) << "Name" << setw(40) << "Address" << setw(7) << "Height" << setw(11) << "DOB" << setw(7) << "Gender" << endl;
+
+        for(int x = 0; x < (int)people.size(); x++)
+        {
+          people[x]->print();
+
+          cout << endl;
+        }
+
+        cin.ignore();
+        cin.get();
+
         break;
       case 6:
+        cout << "\033[2J\033[1;1H";
+        cout << collegeType::getName() << "list of courses" << endl << endl;
+
+        cout << left << setw(11) << "Section ID" << setw(12) << "Course Name" << setw(25) << "Title" 
+        << setw(5) << "Days" << setw(20) << "Time" << setw(4) << "Cap" << setw(9) << "Enrolled"
+        << setw(6) << "Status" << endl;
+
+        for(int x = 0; x < (int)courses.size(); x++)
+        {
+          cout << left << setw(11) << courses[x]->getSectionId() << setw(12) << courses[x]->getCourse()
+          << setw(25) << courses[x]->getTitle() << setw(5) << courses[x]->getDays() << setw(20) 
+          << courses[x]->getTime() << setw(4) << courses[x]->getCap() << setw(9) << courses[x]->getEnrolled()
+          << setw(6) << courses[x]->getStatus() << endl;
+        }
+
+        cin.ignore();
+        cin.get();
+
         break;
       case 7:
         cout << "\033[2J\033[1;1H";

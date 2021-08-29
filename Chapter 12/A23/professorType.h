@@ -26,12 +26,13 @@ class professorType: public personType{
     string getDepartment();
     string getDegree();
 
-    void assignCourse(courseType *course_);
+    bool assignCourse(courseType *course_);
   private:
     string employeeID;
     string department;
     string degree;
     int numCrsTaught {0};
+    int maxCourse {5};
 
     courseType *courses;
 };

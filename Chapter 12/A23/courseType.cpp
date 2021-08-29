@@ -4,6 +4,7 @@ class courseType;
 
 courseType::courseType()
 {
+  open = true;
 }
 courseType::courseType(string sectionId_, string course_, string title_, string days_,
 string time_, string room_, int cap_)
@@ -11,6 +12,7 @@ string time_, string room_, int cap_)
   time(time_), room(room_), cap(cap_)
 {
   students = new studentType[cap];
+  open = true;
 }
 courseType::courseType(const courseType &other)
 {
@@ -107,6 +109,7 @@ bool courseType::courseType::addStudent(studentType *other)
     open = true;
     students[enrolled] = *other;
     incEnrolled();
+    collegeType::incrementCensus();
     return true;
   }
   else{
@@ -117,4 +120,12 @@ bool courseType::courseType::addStudent(studentType *other)
 void courseType::printStudents()
 {
 
+}
+string courseType::getStatus()
+{
+  if(getOpen())
+  {
+    return "Open";
+  }
+  return "Closed";
 }

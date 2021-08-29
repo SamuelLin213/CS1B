@@ -22,28 +22,8 @@ personType::personType(const personType& other)
 
 void personType::print()
 {
-  string mom;
-  string pop;
-  if(mother == nullptr)
-  {
-    mom = "unknown";
-  }
-  else
-    mom = mother->getFName();
-  if(father == nullptr)
-  {
-    pop = "unknown";
-  }
-  else
-    pop = father->getFName();
-
-  cout << "Name: " << fName << " " << lName << endl;
-  cout << "Address: " << address << endl;
-  cout << "Height: " << height << endl;
-  cout << "Date of birth: " << DOB << endl;
-  cout << "Gender: " << gender << endl;
-  cout << "Father: " << pop << endl;
-  cout << "Mother: " << mom << endl;
+  cout << left << setw(10) << fName << setw(15) << lName << setw(40) << address << setw(7) << height 
+  << setw(11) << DOB << setw(7) << gender;
 }
 bool personType::equals(personType other)
 {

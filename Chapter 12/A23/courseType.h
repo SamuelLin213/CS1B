@@ -2,6 +2,7 @@
 #define COURSETYPE_H
 #include "studentType.h"
 #include "professorType.h"
+#include "collegeType.h"
 
 class studentType;
 
@@ -31,6 +32,7 @@ class courseType
     int getCap();
     int getEnrolled();
     bool getOpen();
+    string getStatus();
     void incEnrolled();
     void print();
   private:

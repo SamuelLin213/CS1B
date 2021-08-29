@@ -7,14 +7,14 @@ professorType::professorType()
   employeeID = "";
   department = "";
   degree = "";
-  courses = new courseType[5];
+  courses = new courseType[maxCourse];
 }
 professorType::professorType(string fName, string lName)
 {
   this->setFName(fName);
   this->setLName(lName);
   professorType();
-  courses = new courseType[5];
+  courses = new courseType[maxCourse];
 }
 professorType::professorType (string fName, string lName, string address, double height,
   string dob, char gender, string employeeID, string department, string degree)
@@ -28,7 +28,7 @@ professorType::professorType (string fName, string lName, string address, double
     this->employeeID = employeeID;
     this->department = department;
     this->degree = degree;
-    courses = new courseType[5];
+    courses = new courseType[maxCourse];
 }
 
 bool professorType::equals(professorType other)
@@ -39,10 +39,26 @@ bool professorType::equals(professorType other)
 }
 void professorType::print()
 {
+
+  cout << setw(90) << "" << left << setw(9) << "ID" << setw(20) << "Department" << setw(25) << "Degree" << setw(11) << "Course Load" << endl;
+
   personType::print();
-  cout << "Employee ID: " << employeeID << endl;
-  cout << "Department: " << department << endl;
-  cout << "Degree: " << degree << endl;
+
+  cout << setw(9) << employeeID << setw(20) << department << setw(25) << degree << setw(11) << numCrsTaught << endl;
+
+  if(numCrsTaught > 0)
+  {
+    cout << endl << setw(90) << "" << setw(6) << "ID" << setw(12) << "Course Name" << setw(21) << "Title" << setw(5) << "Days"
+    << setw(20) << "Time" << setw(4) << "Cap" << setw(5) << "Size" << setw(6) << "Status" << endl;
+    for(int i = 0; i < numCrsTaught; i++)
+    {
+      cout << setw(90) << "" << setw(6) << courses[i].getSectionId() << setw(12) << courses[i].getCourse() << setw(21) << courses[i].getTitle() 
+      << setw(5) << courses[i].getDays() << setw(20) << courses[i].getTime() << setw(4) << courses[i].getCap() << setw(5) << courses[i].getEnrolled()
+      << setw(6) << courses[i].getStatus() << endl;
+
+    }
+    cout << endl;
+  }
 }
 
 void professorType::setEmployeeID(string id)
@@ -70,11 +86,13 @@ string professorType::getDegree()
 {
   return degree;
 }
-void professorType::assignCourse(courseType *course_)
+bool professorType::assignCourse(courseType *course_)
 {
-  if(numCrsTaught < 5)
+  if(numCrsTaught < maxCourse)
   {
     courses[numCrsTaught] = *course_;
     numCrsTaught++;
+    return true;
   }
+  return false;
 }

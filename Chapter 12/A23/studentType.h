@@ -24,6 +24,7 @@ class studentType: public personType{
         double getGPA();
         string getID();
         string getClassification();
+        int getNumCourses();
 
         //overridden methods
         void print() ; //override the parents' print method
@@ -35,7 +36,7 @@ class studentType: public personType{
         double gpa;
         string classification;
 
-        int numCourses {0};
+        int numCourses;
         courseType *courses;
 };
 

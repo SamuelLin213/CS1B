@@ -14,7 +14,7 @@ class personType
     //copy constructor
     personType(const personType& other);
 
-    void print();
+    virtual void print();
     bool equals(personType other);
 
     void setFName(string name);
@@ -36,6 +36,7 @@ class personType
 
     void setMother(personType mother_);
     void setFather(personType father_);
+
   private:
     string fName;
     string lName;
