@@ -9,6 +9,9 @@ class bookType;
 
 const int DB_SIZE = 20;
 
+void loadBooks();
+void saveBooks();
+
 void cashier(bookType **books);
 void invMenu(bookType **books);
 void reports(bookType **books);
@@ -32,6 +35,12 @@ int isEmpty(bookType **books, int index);
 void removeBook(bookType **books, int index);
 
 template <typename T>
-void sortBooks(T** books);
+void sortQty(T** books);
+
+template <typename T>
+void sortCost(T** books);
+
+template <typename T>
+void sortAge(T** books);
 
 #endif

@@ -1,6 +1,8 @@
 #include "functions.h"
 
 void reports(bookType **books){
+  bookType** booksCost = books;
+  bookType** booksAge = books;
   int input = 10;
 
   while(input != 7)
@@ -43,10 +45,18 @@ void reports(bookType **books){
         repQty(books);
         break;
       case 5:
-        repCost(books);
+        for(int i = 0; i < bookType::getBookCount(); i++)
+        {
+          *booksCost[i] = *books[i];
+        }
+        repCost(booksCost);
         break;
       case 6:
-        repAge(books);
+        for(int i = 0; i < bookType::getBookCount(); i++)
+        {
+          *booksAge[i] = *books[i];
+        }
+        repAge(booksAge);
         break;
     }
   }
@@ -306,12 +316,12 @@ void repQty(bookType **books){
     pageCnt = 1;
   } 
 
-  sortBooks(books);
+  sortQty(books);
 
   cout << "\033[2J\033[1;1H";
 
   cout << "Serendipity Booksellers" << endl;
-  cout << " Report Listing" << endl;
+  cout << " Report By Quantity On Hand" << endl;
   cout << "Date: " << 1 + ltm->tm_mon << '/' << ltm->tm_mday
   << '/'<<  1900 + ltm->tm_year;
   cout << "   Page: " << pageCnt << " of " << (int)pages;
@@ -345,7 +355,7 @@ void repQty(bookType **books){
       cout << "\033[2J\033[1;1H";
 
       cout << "Serendipity Booksellers" << endl;
-      cout << " Report Listing" << endl;
+      cout << " Report By Quantity On Hand" << endl;
       cout << "Date: " << 1 + ltm->tm_mon << '/' << ltm->tm_mday
       << '/'<<  1900 + ltm->tm_year;
       cout << "   Page: " << pageCnt << " of " << (int)pages;
@@ -359,17 +369,136 @@ void repQty(bookType **books){
   }
 }
 void repCost(bookType **books){
-  cin.ignore();
-  cout << endl << "You selected Listing by Cost.";
-  cin.get();
+  time_t now = time(0);
+  tm *ltm = localtime(&now);
+  int pageCnt = 0;
+  int bookNum = bookType::getBookCount();
+  double pages = ceil(bookNum/10.0);
+
+  if(bookType::getBookCount() > 0)
+  {
+    pageCnt = 1;
+  } 
+
+  sortCost(books);
+
+  cout << "\033[2J\033[1;1H";
+
+  cout << "Serendipity Booksellers" << endl;
+  cout << " Report Wholesale Cost Hi-Lo" << endl;
+  cout << "Date: " << 1 + ltm->tm_mon << '/' << ltm->tm_mday
+  << '/'<<  1900 + ltm->tm_year;
+  cout << "   Page: " << pageCnt << " of " << (int)pages;
+  cout << "   Database size: " << DB_SIZE;
+  cout << "   Current book count: " << bookNum << endl << endl;
+
+  cout << left << setw(55) << "Title" << setw(15) << "ISBN" << setw(16)
+  << right << "Wholesale Cost" << endl;
+
+  for(int i = 0; i < bookType::getBookCount(); i++)
+  {
+    string tempTitle = books[i]->getTitle();
+    if(books[i]->getTitle().length() > 49)
+    {
+      tempTitle = tempTitle.substr(0, 49);
+    }
+
+    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN()
+    << right << setw(12) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << books[i]->getWholesale() << endl << setfill(' ');
+
+    if((i+1)%10 == 0)
+    {
+      if(i == 9)
+      {
+          cin.ignore();
+      }
+      cin.get();
+
+      pageCnt++;
+
+      cout << "\033[2J\033[1;1H";
+
+      cout << "Serendipity Booksellers" << endl;
+      cout << " Report Wholesale Cost Hi-Lo" << endl;
+      cout << "Date: " << 1 + ltm->tm_mon << '/' << ltm->tm_mday
+      << '/'<<  1900 + ltm->tm_year;
+      cout << "   Page: " << pageCnt << " of " << (int)pages;
+      cout << "   Database size: " << DB_SIZE;
+      cout << "   Current book count: " << bookNum << endl << endl;
+
+      cout << left << setw(55) << "Title" << setw(15) << "ISBN" << setw(16)
+      << right << "Wholesale Cost" << endl;
+    }
+
+  }
 }
 void repAge(bookType **books){
-  cin.ignore();
-  cout << endl << "You selected Listing by Age.";
-  cin.get();
+  time_t now = time(0);
+  tm *ltm = localtime(&now);
+  int pageCnt = 0;
+  int bookNum = bookType::getBookCount();
+  double pages = ceil(bookNum/10.0);
+
+  if(bookType::getBookCount() > 0)
+  {
+    pageCnt = 1;
+  } 
+
+  sortAge(books);
+
+  cout << "\033[2J\033[1;1H";
+
+  cout << "Serendipity Booksellers" << endl;
+  cout << " Report By Age(Oldest First)" << endl;
+  cout << "Date: " << 1 + ltm->tm_mon << '/' << ltm->tm_mday
+  << '/'<<  1900 + ltm->tm_year;
+  cout << "   Page: " << pageCnt << " of " << (int)pages;
+  cout << "   Database size: " << DB_SIZE;
+  cout << "   Current book count: " << bookNum << endl << endl;
+
+  cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(9)
+  << right << "Qty O/H" << setw(14) << "Date Added" << endl;
+
+  for(int i = 0; i < bookType::getBookCount(); i++)
+  {
+    string tempTitle = books[i]->getTitle();
+    if(books[i]->getTitle().length() > 49)
+    {
+      tempTitle = tempTitle.substr(0, 49);
+    }
+
+    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN() << setw(6)
+    << right << books[i]->getQtyOnHand() << setw(17) << books[i]->getDateAdded() << endl;
+
+    if((i+1)%10 == 0)
+    {
+      if(i == 9)
+      {
+          cin.ignore();
+      }
+      cin.get();
+
+      pageCnt++;
+
+      cout << "\033[2J\033[1;1H";
+
+      cout << "Serendipity Booksellers" << endl;
+      cout << " Report By Age(Oldest First)" << endl;
+      cout << "Date: " << 1 + ltm->tm_mon << '/' << ltm->tm_mday
+      << '/'<<  1900 + ltm->tm_year;
+      cout << "   Page: " << pageCnt << " of " << (int)pages;
+      cout << "   Database size: " << DB_SIZE;
+      cout << "   Current book count: " << bookNum << endl << endl;
+
+      cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(9)
+      << right << "Qty O/H" << setw(14) << "Date Added" << endl;
+    }
+
+  }
 }
 template <typename T>
-void sortBooks(T** books)
+void sortQty(T** books)
 {
   for(int i = 0; i < T::getBookCount()-1; i++)
   {
@@ -383,5 +512,54 @@ void sortBooks(T** books)
     }
     if(largestIndex != i)
       swap(*books[i], *books[largestIndex]);
+  }
+}
+template <typename T>
+void sortCost(T** books)
+{
+  for(int i = 0; i < T::getBookCount()-1; i++)
+  {
+    int largestIndex = i;
+    for(int x = i+1; x < T::getBookCount(); x++)
+    {
+      if(books[x]->getWholesale() > books[largestIndex]->getWholesale())
+      {
+        largestIndex = x;
+      }
+    }
+    if(largestIndex != i)
+      swap(*books[i], *books[largestIndex]);
+  }
+}
+template <typename T>
+void sortAge(T** books)
+{
+  for(int i = 0; i < T::getBookCount()-1; i++)
+  {
+    int smallestIndex = i;
+    for(int x = i+1; x < T::getBookCount(); x++)
+    {
+      int monthX = stoi(books[x]->getDateAdded().substr(0, 2));
+      int monthS = stoi(books[smallestIndex]->getDateAdded().substr(0, 2));
+      int dayX = stoi(books[x]->getDateAdded().substr(3, 2));
+      int dayS = stoi(books[smallestIndex]->getDateAdded().substr(3, 2));
+      int yearX = stoi(books[x]->getDateAdded().substr(6, 4));
+      int yearS = stoi(books[smallestIndex]->getDateAdded().substr(6, 4));
+
+      if(yearX < yearS)
+      {
+        smallestIndex = x;
+      }
+      else if(yearX == yearS && monthX < monthS)
+      {
+        smallestIndex = x;
+      }
+      else if(yearX == yearS && monthX == monthS && dayX < dayS)
+      {
+        smallestIndex = x;
+      }
+    }
+    if(smallestIndex != i)
+      swap(*books[i], *books[smallestIndex]);
   }
 }
