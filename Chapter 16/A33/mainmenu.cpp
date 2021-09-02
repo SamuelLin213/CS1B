@@ -72,7 +72,36 @@ void loadBooks(bookType **books)
 
   input.open("database.txt");
 
-  while(true && !input.eof())
+  // if(!input.eof())
+  // {
+  //   cout << "File opened!" << endl;
+  //   // cin.ignore();
+  //   cin.get();
+  // }
+
+  // getline(input, tempTitle);
+  // input >> tempIsbn;
+  // input.ignore();
+  // getline(input, tempAuthor);
+  // getline(input, tempPublisher);
+  // input >> tempDate;
+  // input >> tempQty;
+  // input >> tempWholesale;
+  // input >> tempRetail;
+  //
+  // books[0] = new bookType;
+  // books[0]->setTitle(tempTitle);
+  // books[0]->setISBN(tempIsbn);
+  // books[0]->setAuthor(tempAuthor);
+  // books[0]->setPub(tempPublisher);
+  // books[0]->setDateAdded(tempDate);
+  // books[0]->setQtyOnHand(tempQty);
+  // books[0]->setWholesale(tempWholesale);
+  // books[0]->setRetail(tempRetail);
+  //
+  // bookType::incBookCount();
+
+  while(!input.eof())
   {
     getline(input, tempTitle);
     input >> tempIsbn;
@@ -83,6 +112,7 @@ void loadBooks(bookType **books)
     input >> tempQty;
     input >> tempWholesale;
     input >> tempRetail;
+    input.ignore();
 
     books[bookType::getBookCount()] = new bookType;
     books[bookType::getBookCount()]->setTitle(tempTitle);
@@ -97,20 +127,20 @@ void loadBooks(bookType **books)
     bookType::incBookCount();
 
     if(input.eof())
-      break;   
+      break;
   }
 
   input.close();
 }
 void saveBooks(bookType **books)
 {
-  ofstream output;  
+  ofstream output;
 
   output.open("database.txt");
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    
+
   }
 
   output.close();

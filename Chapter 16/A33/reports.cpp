@@ -112,7 +112,7 @@ void repListing(bookType **books){
     cout << left << setw(30) << tempTitle << setw(11) << books[i]->getISBN()
     << setw(15) << tempAuthor << setw(15) << tempPub
     << setw(11) << books[i]->getDateAdded() << right << setw(7) << books[i]->getQtyOnHand() << setw(6) << ""
-    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i]->getWholesale() << setfill(' ') << setw(6) 
+    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i]->getWholesale() << setfill(' ') << setw(6)
     << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
     if((i+1)%10 == 0)
     {
@@ -314,7 +314,7 @@ void repQty(bookType **books){
   if(bookType::getBookCount() > 0)
   {
     pageCnt = 1;
-  } 
+  }
 
   sortQty(books);
 
@@ -378,7 +378,7 @@ void repCost(bookType **books){
   if(bookType::getBookCount() > 0)
   {
     pageCnt = 1;
-  } 
+  }
 
   sortCost(books);
 
@@ -443,7 +443,7 @@ void repAge(bookType **books){
   if(bookType::getBookCount() > 0)
   {
     pageCnt = 1;
-  } 
+  }
 
   sortAge(books);
 
