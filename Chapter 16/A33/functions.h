@@ -9,7 +9,7 @@ using namespace std;
 
 class bookType;
 
-const int DB_SIZE = 20;
+const int DB_SIZE = 125;
 
 void loadBooks(bookType **books);
 void saveBooks(bookType **books);

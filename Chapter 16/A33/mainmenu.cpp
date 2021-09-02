@@ -83,6 +83,7 @@ void loadBooks(bookType **books)
     input >> tempWholesale;
     input >> tempRetail;
 
+    books[index] = new bookType;
     books[index]->setTitle(tempTitle);
     books[index]->setISBN(tempIsbn);
     books[index]->setAuthor(tempAuthor);
@@ -105,7 +106,7 @@ void saveBooks(bookType **books)
 
   output.open("database.txt");
 
-  for(int i = 0; i < bookType::bookCount; i++)
+  for(int i = 0; i < bookType::getBookCount(); i++)
   {
     
   }
