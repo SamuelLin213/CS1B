@@ -56,3 +56,40 @@ int main(){
   delete [] books;
 
 }
+void loadBooks(bookType **books)
+{
+  ifstream input;
+  int index = 0;
+  string tempTitle;
+  string tempIsbn;
+  string tempAuthor;
+  string tempPublisher;
+  string tempDate;
+  int tempQty;
+  float tempWholesale;
+  float tempRetail;
+
+  input.open("database.txt");
+
+  while(true)
+  {
+    getline(input, tempTitle);
+    input >> tempIsbn;
+    input.ignore();
+    getline(input, tempAuthor);
+    getline(input, tempPublisher);
+    input >> tempDate;
+    input >> tempQty;
+    input >> tempWholesale;
+    input >> tempRetail;
+
+    if(input.eof())
+      break;
+  }
+
+  input.close();
+}
+void saveBooks(bookType **books)
+{
+
+}

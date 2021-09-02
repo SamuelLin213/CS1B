@@ -3,14 +3,16 @@
 
 #include "bookType.h"
 #include <math.h>
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 class bookType;
 
 const int DB_SIZE = 20;
 
-void loadBooks();
-void saveBooks();
+void loadBooks(bookType **books);
+void saveBooks(bookType **books);
 
 void cashier(bookType **books);
 void invMenu(bookType **books);
