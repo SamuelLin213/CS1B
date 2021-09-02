@@ -85,7 +85,7 @@ void repListing(bookType **books){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(30) << "Title" << setw(11) << "ISBN" << setw(15) <<
+  cout << left << setw(30) << "Title" << setw(14) << "ISBN" << setw(15) <<
   "Author" << setw(15) << "Publisher" << setw(11) << "Date added" << setw(8)
   << "Qty O/H" << setw(15) << "Wholesale cost" << setw(12) << "Retail price" << endl;
 
@@ -109,7 +109,7 @@ void repListing(bookType **books){
     }
 
     tenth = false;
-    cout << left << setw(30) << tempTitle << setw(11) << books[i]->getISBN()
+    cout << left << setw(30) << tempTitle << setw(14) << books[i]->getISBN()
     << setw(15) << tempAuthor << setw(15) << tempPub
     << setw(11) << books[i]->getDateAdded() << right << setw(7) << books[i]->getQtyOnHand() << setw(6) << ""
     << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i]->getWholesale() << setfill(' ') << setw(6)
@@ -135,7 +135,7 @@ void repListing(bookType **books){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(30) << "Title" << setw(11) << "ISBN" << setw(15) <<
+      cout << left << setw(30) << "Title" << setw(14) << "ISBN" << setw(15) <<
       "Author" << setw(15) << "Publisher" << setw(11) << "Date added" << setw(8)
       << "Qty O/H" << setw(15) << "Wholesale cost" << setw(12) << "Retail price" << endl;
     }
@@ -169,7 +169,7 @@ void repWholesale(bookType **books){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(12)
+  cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
   << right << "Qty O/H" << setw(15) << "Wholesale cost" << endl;
 
   for(int i = 0; i < bookType::getBookCount(); i++)
@@ -180,7 +180,7 @@ void repWholesale(bookType **books){
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN() << setw(12)
+    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN() << setw(12)
     << right << books[i]->getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
     << fixed << setprecision(2) << books[i]->getWholesale() << endl << setfill(' ');
 
@@ -219,7 +219,7 @@ void repWholesale(bookType **books){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(12)
+      cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
       << right << "Qty O/H" << setw(15) << "Wholesale cost" << endl;
     }
 
@@ -248,7 +248,7 @@ void repRetail(bookType **books){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(12)
+  cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
   << right << "Qty O/H" << setw(15) << "Retail cost" << endl;
 
   for(int i = 0; i < bookType::getBookCount(); i++)
@@ -259,7 +259,7 @@ void repRetail(bookType **books){
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN() << setw(12)
+    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN() << setw(12)
     << right << books[i]->getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
     << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
 
@@ -298,12 +298,13 @@ void repRetail(bookType **books){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(12)
+      cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
       << right << "Qty O/H" << setw(15) << "Retail cost" << endl;
     }
 
   }
 }
+
 void repQty(bookType **books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
@@ -328,7 +329,7 @@ void repQty(bookType **books){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(55) << "Title" << setw(15) << "ISBN" << setw(12)
+  cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(12)
   << right << "Qty O/H" << endl;
 
   for(int i = 0; i < bookType::getBookCount(); i++)
@@ -339,7 +340,7 @@ void repQty(bookType **books){
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(55) << tempTitle << setw(15) << books[i]->getISBN() << setw(12)
+    cout << left << setw(55) << tempTitle << setw(18) << books[i]->getISBN() << setw(12)
     << right << books[i]->getQtyOnHand() << endl;
 
     if((i+1)%10 == 0)
@@ -362,12 +363,13 @@ void repQty(bookType **books){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(55) << "Title" << setw(15) << "ISBN" << setw(12)
+      cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(12)
       << right << "Qty O/H" << endl;
     }
 
   }
 }
+
 void repCost(bookType **books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
@@ -392,7 +394,7 @@ void repCost(bookType **books){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(55) << "Title" << setw(15) << "ISBN" << setw(16)
+  cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(16)
   << right << "Wholesale Cost" << endl;
 
   for(int i = 0; i < bookType::getBookCount(); i++)
@@ -403,7 +405,7 @@ void repCost(bookType **books){
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN()
+    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN()
     << right << setw(12) << "" << "$" << setw(8) << setfill('.')
     << fixed << setprecision(2) << books[i]->getWholesale() << endl << setfill(' ');
 
@@ -427,12 +429,13 @@ void repCost(bookType **books){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(55) << "Title" << setw(15) << "ISBN" << setw(16)
+      cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(16)
       << right << "Wholesale Cost" << endl;
     }
 
   }
 }
+
 void repAge(bookType **books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
@@ -457,7 +460,7 @@ void repAge(bookType **books){
   cout << "   Database size: " << DB_SIZE;
   cout << "   Current book count: " << bookNum << endl << endl;
 
-  cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(9)
+  cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(9)
   << right << "Qty O/H" << setw(14) << "Date Added" << endl;
 
   for(int i = 0; i < bookType::getBookCount(); i++)
@@ -468,7 +471,7 @@ void repAge(bookType **books){
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(15) << books[i]->getISBN() << setw(6)
+    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN() << setw(6)
     << right << books[i]->getQtyOnHand() << setw(17) << books[i]->getDateAdded() << endl;
 
     if((i+1)%10 == 0)
@@ -491,12 +494,13 @@ void repAge(bookType **books){
       cout << "   Database size: " << DB_SIZE;
       cout << "   Current book count: " << bookNum << endl << endl;
 
-      cout << left << setw(50) << "Title" << setw(15) << "ISBN" << setw(9)
+      cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(9)
       << right << "Qty O/H" << setw(14) << "Date Added" << endl;
     }
 
   }
 }
+
 template <typename T>
 void sortQty(T** books)
 {
