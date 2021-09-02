@@ -9,7 +9,7 @@ int main(){
 
   int choice = 0;
 
-  saveBooks(books);
+  loadBooks(books);
 
   while(choice != 4){
     do{
@@ -61,7 +61,6 @@ int main(){
 void loadBooks(bookType **books)
 {
   ifstream input;
-  int index = 0;
   string tempTitle;
   string tempIsbn;
   string tempAuthor;
@@ -85,19 +84,20 @@ void loadBooks(bookType **books)
     input >> tempWholesale;
     input >> tempRetail;
 
-    books[index] = new bookType;
-    books[index]->setTitle(tempTitle);
-    books[index]->setISBN(tempIsbn);
-    books[index]->setAuthor(tempAuthor);
-    books[index]->setPub(tempPublisher);
-    books[index]->setDateAdded(tempDate);
-    books[index]->setQtyOnHand(tempQty);
-    books[index]->setWholesale(tempWholesale);
-    books[index]->setRetail(tempRetail);
+    books[bookType::getBookCount()] = new bookType;
+    books[bookType::getBookCount()]->setTitle(tempTitle);
+    books[bookType::getBookCount()]->setISBN(tempIsbn);
+    books[bookType::getBookCount()]->setAuthor(tempAuthor);
+    books[bookType::getBookCount()]->setPub(tempPublisher);
+    books[bookType::getBookCount()]->setDateAdded(tempDate);
+    books[bookType::getBookCount()]->setQtyOnHand(tempQty);
+    books[bookType::getBookCount()]->setWholesale(tempWholesale);
+    books[bookType::getBookCount()]->setRetail(tempRetail);
+
+    bookType::incBookCount();
 
     if(input.eof())
-      break;    
-    index++;
+      break;   
   }
 
   input.close();
