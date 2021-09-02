@@ -19,18 +19,21 @@ class orderedLinkedList: public linkedListType<Type>
       current = first;
 
       while (current != nullptr && !found)
-        if (current->info >= searchItem)
+        if ((current->info.getTitle() >= searchItem.getTitle() && code == 1) ||
+            (current->info.getISBN() >= searchItem.getISBN() && code == 2) )
           found = true;
         else
           current = current->link;
 
-      if (found)
-        found = (current->info == searchItem);
+      if (found && code == 1)
+        found = (current->info.getTitle() == searchItem.getTitle());
+      else if(found && code == 2)
+        found = (current->info.getISBN() == searchItem.getISBN());
 
       return found;
     }
 
-    void insert(const Type& newItem)
+    void insert(const Type& newItem, int code)
     {
       nodeType<Type> *current;
       nodeType<Type> *trailCurrent;
@@ -54,14 +57,18 @@ class orderedLinkedList: public linkedListType<Type>
         found = false;
 
         while (current != nullptr && !found)
-          if (current->info >= newItem)
+        {
+
+          if ((current->info.getQtyOnHand() >= newItem.getQtyOnHand() && code == 1) ||
+              (current->info.getWholesale() >= newItem.getWholesale() && code == 2) ||
+              (current->info.getDateAdded() >= newItem.getDateAdded() && code == 3))
             found = true;
           else
           {
             trailCurrent = current;
             current = current->link;
           }
-
+        }
         if (current == first)
         {
           newNode->link = first;
@@ -91,7 +98,7 @@ class orderedLinkedList: public linkedListType<Type>
       insert(newItem);
     }
 
-    void deleteNode(const Type& deleteItem)
+    void deleteNode(const Type& deleteItem, int code)
     {
       nodeType<Type> *current;
       nodeType<Type> *trailCurrent;
@@ -105,7 +112,8 @@ class orderedLinkedList: public linkedListType<Type>
           found = false;
 
           while (current != nullptr && !found)
-            if (current->info >= deleteItem)
+            if ( (current->info.getTitle() >= deleteItem.getTitle() && code == 1) ||
+                (current->info.getISBN() >= deleteItem.getISBN() && code == 2))
               found = true;
             else
             {
@@ -117,7 +125,8 @@ class orderedLinkedList: public linkedListType<Type>
             cout << "The item to be deleted is not in the list" << endl;
           else
           {
-            if (current->info == deleteItem)
+            if ((current->info.getTitle() == deleteItem.getTitle() && code == 1) ||
+                (current->info.getISBN() == deleteItem.getISBN() && code == 2))
             {
               if (first == current)
               {
