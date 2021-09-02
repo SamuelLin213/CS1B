@@ -96,5 +96,4 @@ void saveBooks(bookType **books)
   output.open("database.txt");
 
   output.close();
-  
 }
