@@ -51,6 +51,8 @@ int main(){
     }
   }
 
+  saveBooks(books);
+
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
     delete books[i];
@@ -140,7 +142,14 @@ void saveBooks(bookType **books)
 
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-
+    output << books[i]->getTitle() << endl;
+    output << books[i]->getISBN() << endl;
+    output << books[i]->getAuthor() << endl;
+    output << books[i]->getPub() << endl;
+    output << books[i]->getDateAdded() << endl;
+    output << books[i]->getQtyOnHand() << endl;
+    output << books[i]->getWholesale() << endl;
+    output << books[i]->getRetail() << endl;
   }
 
   output.close();
