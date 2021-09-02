@@ -91,5 +91,9 @@ void loadBooks(bookType **books)
 }
 void saveBooks(bookType **books)
 {
+  ofstream output;
 
+  output.open("database.txt");
+
+  output.close();
 }
