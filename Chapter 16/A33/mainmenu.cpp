@@ -71,7 +71,7 @@ void loadBooks(bookType **books)
 
   input.open("database.txt");
 
-  while(true)
+  while(true && !input.eof())
   {
     getline(input, tempTitle);
     input >> tempIsbn;
@@ -83,8 +83,18 @@ void loadBooks(bookType **books)
     input >> tempWholesale;
     input >> tempRetail;
 
+    books[index]->setTitle(tempTitle);
+    books[index]->setISBN(tempIsbn);
+    books[index]->setAuthor(tempAuthor);
+    books[index]->setPub(tempPublisher);
+    books[index]->setDateAdded(tempDate);
+    books[index]->setQtyOnHand(tempQty);
+    books[index]->setWholesale(tempWholesale);
+    books[index]->setRetail(tempRetail);
+
     if(input.eof())
-      break;
+      break;    
+
   }
 
   input.close();
@@ -94,6 +104,11 @@ void saveBooks(bookType **books)
   ofstream output;
 
   output.open("database.txt");
+
+  for(int i = 0; i < bookType::bookCount; i++)
+  {
+    
+  }
 
   output.close();
 }
