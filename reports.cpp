@@ -121,6 +121,7 @@ void repListing(bookType **books){
       {
           cin.ignore();
       }
+      cin.ignore();
       cin.get();
 
       pageCnt++;

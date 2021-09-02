@@ -9,7 +9,7 @@ int main(){
 
   int choice = 0;
 
-  saveBooks(books);
+  loadBooks(books);
 
   while(choice != 4){
     do{
@@ -61,7 +61,6 @@ int main(){
 void loadBooks(bookType **books)
 {
   ifstream input;
-  int index = 0;
   string tempTitle;
   string tempIsbn;
   string tempAuthor;
@@ -73,11 +72,57 @@ void loadBooks(bookType **books)
 
   input.open("database.txt");
 
+  if(input.fail())
+  {
+    cout << "Error: file not opened." << endl;
+    cin.ignore();
+    cin.get();
+  }
+
+  // books[bookType::getBookCount()] = new bookType;
+  // books[bookType::getBookCount()]->setTitle(tempTitle);
+  // books[bookType::getBookCount()]->setISBN(tempIsbn);
+  // books[bookType::getBookCount()]->setAuthor(tempAuthor);
+  // books[bookType::getBookCount()]->setPub(tempPublisher);
+  // books[bookType::getBookCount()]->setDateAdded(tempDate);
+  // books[bookType::getBookCount()]->setQtyOnHand(tempQty);
+  // books[bookType::getBookCount()]->setWholesale(tempWholesale);
+  // books[bookType::getBookCount()]->setRetail(tempRetail);
+
+  // bookType::incBookCount();
+
+  // int i = bookType::getBookCount() - 1;
+
+  // if(books[i]->getTitle().length() > 29)
+  // {
+  //   tempTitle = tempTitle.substr(0, 29);
+  // }
+  // if(books[i]->getAuthor().length() > 14)
+  // {
+  //   tempAuthor = tempAuthor.substr(0, 14);
+  // }
+  // if(books[i]->getPub().length() > 14)
+  // {
+  //   tempPublisher = tempPublisher.substr(0, 14);
+  // }
+  // cout << left << setw(30) << tempTitle << setw(11) << books[i]->getISBN()
+  //   << setw(15) << tempAuthor << setw(15) << tempPublisher
+  //   << setw(11) << books[i]->getDateAdded() << right << setw(7) << books[i]->getQtyOnHand() << setw(6) << ""
+  //   << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i]->getWholesale() << setfill(' ') << setw(6) 
+  //   << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
+
+  // cin.ignore();
+  // cin.get();
+
+
+
+
+
+
   while(true && !input.eof())
   {
     getline(input, tempTitle);
-    input >> tempIsbn;
-    input.ignore();
+    getline(input, tempIsbn);
     getline(input, tempAuthor);
     getline(input, tempPublisher);
     input >> tempDate;
@@ -85,19 +130,20 @@ void loadBooks(bookType **books)
     input >> tempWholesale;
     input >> tempRetail;
 
-    books[index] = new bookType;
-    books[index]->setTitle(tempTitle);
-    books[index]->setISBN(tempIsbn);
-    books[index]->setAuthor(tempAuthor);
-    books[index]->setPub(tempPublisher);
-    books[index]->setDateAdded(tempDate);
-    books[index]->setQtyOnHand(tempQty);
-    books[index]->setWholesale(tempWholesale);
-    books[index]->setRetail(tempRetail);
+    books[bookType::getBookCount()] = new bookType;
+    books[bookType::getBookCount()]->setTitle(tempTitle);
+    books[bookType::getBookCount()]->setISBN(tempIsbn);
+    books[bookType::getBookCount()]->setAuthor(tempAuthor);
+    books[bookType::getBookCount()]->setPub(tempPublisher);
+    books[bookType::getBookCount()]->setDateAdded(tempDate);
+    books[bookType::getBookCount()]->setQtyOnHand(tempQty);
+    books[bookType::getBookCount()]->setWholesale(tempWholesale);
+    books[bookType::getBookCount()]->setRetail(tempRetail);
+
+    bookType::incBookCount();
 
     if(input.eof())
-      break;    
-    index++;
+      break;  
   }
 
   input.close();
