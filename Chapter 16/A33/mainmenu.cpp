@@ -94,7 +94,7 @@ void loadBooks(bookType **books)
 
     if(input.eof())
       break;    
-
+    index++;
   }
 
   input.close();
