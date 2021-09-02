@@ -9,6 +9,8 @@ int main(){
 
   int choice = 0;
 
+  saveBooks(books);
+
   while(choice != 4){
     do{
       cout << "\033[2J\033[1;1H";
