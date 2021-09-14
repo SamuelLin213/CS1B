@@ -1,8 +1,11 @@
 #include "functions.h"
 
-void reports(bookType **books){
-  bookType** booksCost = books;
-  bookType** booksAge = books;
+void reports(orderedLinkedList<bookType> &books){
+  // bookType** booksCost = books;
+  // bookType** booksAge = books;
+  orderedLinkedList<bookType> booksCost;
+  orderedLinkedList<bookType> booksAge;
+
   int input = 10;
 
   while(input != 7)
@@ -45,24 +48,32 @@ void reports(bookType **books){
         repQty(books);
         break;
       case 5:
-        for(int i = 0; i < bookType::getBookCount(); i++)
         {
-          *booksCost[i] = *books[i];
+          linkedListIterator<bookType> iterator = books.begin();
+          for(int i = 0; i < bookType::getBookCount(); i++)
+          {
+            booksCost.insert(*iterator, 2);
+            ++iterator;
+          }
+          repCost(booksCost);
         }
-        repCost(booksCost);
         break;
       case 6:
-        for(int i = 0; i < bookType::getBookCount(); i++)
         {
-          *booksAge[i] = *books[i];
+          linkedListIterator<bookType> iterator = books.begin();
+          for(int i = 0; i < bookType::getBookCount(); i++)
+          {
+            booksAge.insert(*iterator, 3);
+            ++iterator;
+          }
+          repAge(booksAge);
         }
-        repAge(booksAge);
         break;
     }
   }
 }
 
-void repListing(bookType **books){
+void repListing(orderedLinkedList<bookType> &books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
@@ -89,31 +100,33 @@ void repListing(bookType **books){
   "Author" << setw(15) << "Publisher" << setw(11) << "Date added" << setw(8)
   << "Qty O/H" << setw(15) << "Wholesale cost" << setw(12) << "Retail price" << endl;
 
+  linkedListIterator<bookType> iterator = books.begin();
+
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i]->getTitle();
-    string tempAuthor = books[i]->getAuthor();
-    string tempPub = books[i]->getPub();
+    string tempTitle = (*iterator).getTitle();
+    string tempAuthor = (*iterator).getAuthor();
+    string tempPub = (*iterator).getPub();
 
-    if(books[i]->getTitle().length() > 29)
+    if(tempTitle.length() > 29)
     {
       tempTitle = tempTitle.substr(0, 29);
     }
-    if(books[i]->getAuthor().length() > 14)
+    if(tempAuthor.length() > 14)
     {
       tempAuthor = tempAuthor.substr(0, 14);
     }
-    if(books[i]->getPub().length() > 14)
+    if(tempPub.length() > 14)
     {
       tempPub = tempPub.substr(0, 14);
     }
 
     tenth = false;
-    cout << left << setw(30) << tempTitle << setw(14) << books[i]->getISBN()
+    cout << left << setw(30) << tempTitle << setw(14) << (*iterator).getISBN()
     << setw(15) << tempAuthor << setw(15) << tempPub
-    << setw(11) << books[i]->getDateAdded() << right << setw(7) << books[i]->getQtyOnHand() << setw(6) << ""
-    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << books[i]->getWholesale() << setfill(' ') << setw(6)
-    << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
+    << setw(11) << (*iterator).getDateAdded() << right << setw(7) << (*iterator).getQtyOnHand() << setw(6) << ""
+    << "$" << setw(8) << setfill('.') << fixed << setprecision(2) << (*iterator).getWholesale() << setfill(' ') << setw(6)
+    << "" << "$" << setfill('.') << setw(6) << fixed << setprecision(2) << (*iterator).getRetail() << endl << setfill(' ');
     if((i+1)%10 == 0)
     {
       tenth = true;
@@ -139,7 +152,7 @@ void repListing(bookType **books){
       "Author" << setw(15) << "Publisher" << setw(11) << "Date added" << setw(8)
       << "Qty O/H" << setw(15) << "Wholesale cost" << setw(12) << "Retail price" << endl;
     }
-
+    ++iterator;
   }
   if(!tenth)
   {
@@ -147,7 +160,7 @@ void repListing(bookType **books){
   }
 }
 
-void repWholesale(bookType **books){
+void repWholesale(orderedLinkedList<bookType> &books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
@@ -172,25 +185,27 @@ void repWholesale(bookType **books){
   cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
   << right << "Qty O/H" << setw(15) << "Wholesale cost" << endl;
 
+  linkedListIterator<bookType> iterator = books.begin();
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i]->getTitle();
-    if(books[i]->getTitle().length() > 49)
+    string tempTitle = (*iterator).getTitle();
+    if(tempTitle.length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN() << setw(12)
-    << right << books[i]->getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
-    << fixed << setprecision(2) << books[i]->getWholesale() << endl << setfill(' ');
+    cout << left << setw(50) << tempTitle << setw(18) << (*iterator).getISBN() << setw(12)
+    << right << (*iterator).getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << (*iterator).getWholesale() << endl << setfill(' ');
 
+    linkedListIterator<bookType> iterator2 = books.begin();
     if(i+1 == bookType::getBookCount())
     {
       double wholesaleTotal = 0.0;
 
       for(int x = 0; x < bookType::getBookCount(); x++)
       {
-        wholesaleTotal += (books[x]->getQtyOnHand() * books[x]->getWholesale());
+        wholesaleTotal += ((*iterator2).getQtyOnHand() * (*iterator2).getWholesale());
       }
 
       cout << endl << "Total wholesale value: $" << fixed << setprecision(2) << wholesaleTotal;
@@ -222,11 +237,11 @@ void repWholesale(bookType **books){
       cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
       << right << "Qty O/H" << setw(15) << "Wholesale cost" << endl;
     }
-
+    ++iterator;
   }
 }
 
-void repRetail(bookType **books){
+void repRetail(orderedLinkedList<bookType> &books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
@@ -251,25 +266,28 @@ void repRetail(bookType **books){
   cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
   << right << "Qty O/H" << setw(15) << "Retail cost" << endl;
 
+  linkedListIterator<bookType> iterator = books.begin();
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i]->getTitle();
-    if(books[i]->getTitle().length() > 49)
+    string tempTitle = (*iterator).getTitle();
+    if(tempTitle.length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN() << setw(12)
-    << right << books[i]->getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
-    << fixed << setprecision(2) << books[i]->getRetail() << endl << setfill(' ');
+    cout << left << setw(50) << tempTitle << setw(18) << (*iterator).getISBN() << setw(12)
+    << right << (*iterator).getQtyOnHand() << setw(6) << "" << "$" << setw(8) << setfill('.')
+    << fixed << setprecision(2) << (*iterator).getRetail() << endl << setfill(' ');
 
     if(i+1 == bookType::getBookCount())
     {
       double retailTotal = 0.0;
 
+      linkedListIterator<bookType> iterator2 = books.begin();
       for(int x = 0; x < bookType::getBookCount(); x++)
       {
-        retailTotal += (books[x]->getQtyOnHand() * books[x]->getRetail());
+        retailTotal += ((*iterator2).getQtyOnHand() * (*iterator2).getRetail());
+        ++iterator2;
       }
 
       cout << endl << "Total retail value: $" << fixed << setprecision(2) << retailTotal;
@@ -301,11 +319,11 @@ void repRetail(bookType **books){
       cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(12)
       << right << "Qty O/H" << setw(15) << "Retail cost" << endl;
     }
-
+    ++iterator;
   }
 }
 
-void repQty(bookType **books){
+void repQty(orderedLinkedList<bookType> &books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
@@ -317,7 +335,7 @@ void repQty(bookType **books){
     pageCnt = 1;
   }
 
-  sortQty(books);
+  // sortQty(books);
 
   cout << "\033[2J\033[1;1H";
 
@@ -332,16 +350,17 @@ void repQty(bookType **books){
   cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(12)
   << right << "Qty O/H" << endl;
 
+  linkedListIterator<bookType> iterator = books.begin();
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i]->getTitle();
-    if(books[i]->getTitle().length() > 49)
+    string tempTitle = (*iterator).getTitle();
+    if(tempTitle.length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(55) << tempTitle << setw(18) << books[i]->getISBN() << setw(12)
-    << right << books[i]->getQtyOnHand() << endl;
+    cout << left << setw(55) << tempTitle << setw(18) << (*iterator).getISBN() << setw(12)
+    << right << (*iterator).getQtyOnHand() << endl;
 
     if((i+1)%10 == 0)
     {
@@ -366,11 +385,11 @@ void repQty(bookType **books){
       cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(12)
       << right << "Qty O/H" << endl;
     }
-
+    ++iterator;
   }
 }
 
-void repCost(bookType **books){
+void repCost(orderedLinkedList<bookType> &books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
@@ -382,7 +401,14 @@ void repCost(bookType **books){
     pageCnt = 1;
   }
 
-  sortCost(books);
+  // sortCost(books);
+  orderedLinkedList<bookType> booksCost;
+  linkedListIterator<bookType> iteratorBook = books.begin();
+  for(int i = 0; i < bookType::getBookCount(); i++)
+  {
+    booksCost.insert(*iteratorBook, 2);
+    ++iteratorBook;
+  }
 
   cout << "\033[2J\033[1;1H";
 
@@ -397,17 +423,18 @@ void repCost(bookType **books){
   cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(16)
   << right << "Wholesale Cost" << endl;
 
+  linkedListIterator<bookType> iterator = booksCost.begin();
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i]->getTitle();
-    if(books[i]->getTitle().length() > 49)
+    string tempTitle = (*iterator).getTitle();
+    if(tempTitle.length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN()
+    cout << left << setw(50) << tempTitle << setw(18) << (*iterator).getISBN()
     << right << setw(12) << "" << "$" << setw(8) << setfill('.')
-    << fixed << setprecision(2) << books[i]->getWholesale() << endl << setfill(' ');
+    << fixed << setprecision(2) << (*iterator).getWholesale() << endl << setfill(' ');
 
     if((i+1)%10 == 0)
     {
@@ -432,11 +459,11 @@ void repCost(bookType **books){
       cout << left << setw(55) << "Title" << setw(18) << "ISBN" << setw(16)
       << right << "Wholesale Cost" << endl;
     }
-
+    ++iterator;
   }
 }
 
-void repAge(bookType **books){
+void repAge(orderedLinkedList<bookType> &books){
   time_t now = time(0);
   tm *ltm = localtime(&now);
   int pageCnt = 0;
@@ -448,7 +475,14 @@ void repAge(bookType **books){
     pageCnt = 1;
   }
 
-  sortAge(books);
+  // sortAge(books);
+  orderedLinkedList<bookType> booksAge;
+  linkedListIterator<bookType> iteratorBook = books.begin();
+  for(int i = 0; i < bookType::getBookCount(); i++)
+  {
+    booksAge.insert(*iteratorBook, 2);
+    ++iteratorBook;
+  }
 
   cout << "\033[2J\033[1;1H";
 
@@ -463,16 +497,17 @@ void repAge(bookType **books){
   cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(9)
   << right << "Qty O/H" << setw(14) << "Date Added" << endl;
 
+  linkedListIterator<bookType> iterator = booksAge.begin();
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    string tempTitle = books[i]->getTitle();
-    if(books[i]->getTitle().length() > 49)
+    string tempTitle = (*iteratorBook).getTitle();
+    if(tempTitle.length() > 49)
     {
       tempTitle = tempTitle.substr(0, 49);
     }
 
-    cout << left << setw(50) << tempTitle << setw(18) << books[i]->getISBN() << setw(6)
-    << right << books[i]->getQtyOnHand() << setw(17) << books[i]->getDateAdded() << endl;
+    cout << left << setw(50) << tempTitle << setw(18) << (*iteratorBook).getISBN() << setw(6)
+    << right << (*iteratorBook).getQtyOnHand() << setw(17) << (*iteratorBook).getDateAdded() << endl;
 
     if((i+1)%10 == 0)
     {
@@ -497,73 +532,73 @@ void repAge(bookType **books){
       cout << left << setw(50) << "Title" << setw(18) << "ISBN" << setw(9)
       << right << "Qty O/H" << setw(14) << "Date Added" << endl;
     }
-
+    ++iterator;
   }
 }
 
-template <typename T>
-void sortQty(T** books)
-{
-  for(int i = 0; i < T::getBookCount()-1; i++)
-  {
-    int largestIndex = i;
-    for(int x = i+1; x < T::getBookCount(); x++)
-    {
-      if(*books[x] > *books[largestIndex])
-      {
-        largestIndex = x;
-      }
-    }
-    if(largestIndex != i)
-      swap(*books[i], *books[largestIndex]);
-  }
-}
-template <typename T>
-void sortCost(T** books)
-{
-  for(int i = 0; i < T::getBookCount()-1; i++)
-  {
-    int largestIndex = i;
-    for(int x = i+1; x < T::getBookCount(); x++)
-    {
-      if(books[x]->getWholesale() > books[largestIndex]->getWholesale())
-      {
-        largestIndex = x;
-      }
-    }
-    if(largestIndex != i)
-      swap(*books[i], *books[largestIndex]);
-  }
-}
-template <typename T>
-void sortAge(T** books)
-{
-  for(int i = 0; i < T::getBookCount()-1; i++)
-  {
-    int smallestIndex = i;
-    for(int x = i+1; x < T::getBookCount(); x++)
-    {
-      int monthX = stoi(books[x]->getDateAdded().substr(0, 2));
-      int monthS = stoi(books[smallestIndex]->getDateAdded().substr(0, 2));
-      int dayX = stoi(books[x]->getDateAdded().substr(3, 2));
-      int dayS = stoi(books[smallestIndex]->getDateAdded().substr(3, 2));
-      int yearX = stoi(books[x]->getDateAdded().substr(6, 4));
-      int yearS = stoi(books[smallestIndex]->getDateAdded().substr(6, 4));
-
-      if(yearX < yearS)
-      {
-        smallestIndex = x;
-      }
-      else if(yearX == yearS && monthX < monthS)
-      {
-        smallestIndex = x;
-      }
-      else if(yearX == yearS && monthX == monthS && dayX < dayS)
-      {
-        smallestIndex = x;
-      }
-    }
-    if(smallestIndex != i)
-      swap(*books[i], *books[smallestIndex]);
-  }
-}
+// template <typename T>
+// void sortQty(T** books)
+// {
+//   for(int i = 0; i < T::getBookCount()-1; i++)
+//   {
+//     int largestIndex = i;
+//     for(int x = i+1; x < T::getBookCount(); x++)
+//     {
+//       if(*books[x] > *books[largestIndex])
+//       {
+//         largestIndex = x;
+//       }
+//     }
+//     if(largestIndex != i)
+//       swap(*books[i], *books[largestIndex]);
+//   }
+// }
+// template <typename T>
+// void sortCost(T** books)
+// {
+//   for(int i = 0; i < T::getBookCount()-1; i++)
+//   {
+//     int largestIndex = i;
+//     for(int x = i+1; x < T::getBookCount(); x++)
+//     {
+//       if(books[x]->getWholesale() > books[largestIndex]->getWholesale())
+//       {
+//         largestIndex = x;
+//       }
+//     }
+//     if(largestIndex != i)
+//       swap(*books[i], *books[largestIndex]);
+//   }
+// }
+// template <typename T>
+// void sortAge(T** books)
+// {
+//   for(int i = 0; i < T::getBookCount()-1; i++)
+//   {
+//     int smallestIndex = i;
+//     for(int x = i+1; x < T::getBookCount(); x++)
+//     {
+//       int monthX = stoi(books[x]->getDateAdded().substr(0, 2));
+//       int monthS = stoi(books[smallestIndex]->getDateAdded().substr(0, 2));
+//       int dayX = stoi(books[x]->getDateAdded().substr(3, 2));
+//       int dayS = stoi(books[smallestIndex]->getDateAdded().substr(3, 2));
+//       int yearX = stoi(books[x]->getDateAdded().substr(6, 4));
+//       int yearS = stoi(books[smallestIndex]->getDateAdded().substr(6, 4));
+//
+//       if(yearX < yearS)
+//       {
+//         smallestIndex = x;
+//       }
+//       else if(yearX == yearS && monthX < monthS)
+//       {
+//         smallestIndex = x;
+//       }
+//       else if(yearX == yearS && monthX == monthS && dayX < dayS)
+//       {
+//         smallestIndex = x;
+//       }
+//     }
+//     if(smallestIndex != i)
+//       swap(*books[i], *books[smallestIndex]);
+//   }
+// }

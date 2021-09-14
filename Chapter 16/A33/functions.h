@@ -2,6 +2,7 @@
 #define FUNCTIONS_H
 
 #include "bookType.h"
+#include "orderedLinkedList.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
@@ -11,38 +12,37 @@ class bookType;
 
 const int DB_SIZE = 125;
 
-void loadBooks(bookType **books);
-void saveBooks(bookType **books);
+void loadBooks(orderedLinkedList<bookType> &books);
+void saveBooks(orderedLinkedList<bookType> &books);
 
-void cashier(bookType **books);
-void invMenu(bookType **books);
-void reports(bookType **books);
+void cashier(orderedLinkedList<bookType> &books);
+void invMenu(orderedLinkedList<bookType> &books);
+void reports(orderedLinkedList<bookType> &books);
 
 //invmenu signatures
-int lookUpBook(bookType **books, int code, string key);
-void addBook(bookType **books, int code, int index);
-void editBook(bookType **books);
-void deleteBook(bookType **books);
+nodeType<bookType>* lookUpBook(orderedLinkedList<bookType> &books, int code, string key);
+void addBook(orderedLinkedList<bookType> &books, int code, nodeType<bookType>* index);
+void editBook(orderedLinkedList<bookType> &books);
+void deleteBook(orderedLinkedList<bookType> &books);
 
 //reports signatures
-void repListing(bookType **books);
-void repWholesale(bookType **books);
-void repRetail(bookType **books);
-void repQty(bookType **books);
-void repCost(bookType **books);
-void repAge(bookType **books);
+void repListing(orderedLinkedList<bookType> &books);
+void repWholesale(orderedLinkedList<bookType> &books);
+void repRetail(orderedLinkedList<bookType> &books);
+void repQty(orderedLinkedList<bookType> &books);
+void repCost(orderedLinkedList<bookType> &books);
+void repAge(orderedLinkedList<bookType> &books);
 
 //misc functions
-int isEmpty(bookType **books, int index);
-void removeBook(bookType **books, int index);
+//void removeBook(orderedLinkedList<bookType> &books, int index);
 
-template <typename T>
-void sortQty(T** books);
-
-template <typename T>
-void sortCost(T** books);
-
-template <typename T>
-void sortAge(T** books);
+// template <typename T>
+// void sortQty(orderedLinkedList<T> &&&books);
+//
+// template <typename T>
+// void sortCost(orderedLinkedList<T> &&books);
+//
+// template <typename T>
+// void sortAge(orderedLinkedList<T> &books);
 
 #endif

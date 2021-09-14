@@ -5,7 +5,9 @@ int bookType::bookCount = 0;
 int main(){
   //book struct
   //bookType books[DB_SIZE];
-  bookType **books = new bookType*[DB_SIZE];
+
+  // bookType **books = new bookType*[DB_SIZE];
+  orderedLinkedList<bookType> books;
 
   int choice = 0;
 
@@ -53,14 +55,14 @@ int main(){
 
   saveBooks(books);
 
-  for(int i = 0; i < bookType::getBookCount(); i++)
-  {
-    delete books[i];
-  }
-  delete [] books;
+  // for(int i = 0; i < bookType::getBookCount(); i++)
+  // {
+  //   delete books[i];
+  // }
+  // delete [] books;
 
 }
-void loadBooks(bookType **books)
+void loadBooks(orderedLinkedList<bookType> &books)
 {
   ifstream input;
   string tempTitle;
@@ -74,34 +76,7 @@ void loadBooks(bookType **books)
 
   input.open("database.txt");
 
-  // if(!input.eof())
-  // {
-  //   cout << "File opened!" << endl;
-  //   // cin.ignore();
-  //   cin.get();
-  // }
-
-  // getline(input, tempTitle);
-  // input >> tempIsbn;
-  // input.ignore();
-  // getline(input, tempAuthor);
-  // getline(input, tempPublisher);
-  // input >> tempDate;
-  // input >> tempQty;
-  // input >> tempWholesale;
-  // input >> tempRetail;
-  //
-  // books[0] = new bookType;
-  // books[0]->setTitle(tempTitle);
-  // books[0]->setISBN(tempIsbn);
-  // books[0]->setAuthor(tempAuthor);
-  // books[0]->setPub(tempPublisher);
-  // books[0]->setDateAdded(tempDate);
-  // books[0]->setQtyOnHand(tempQty);
-  // books[0]->setWholesale(tempWholesale);
-  // books[0]->setRetail(tempRetail);
-  //
-  // bookType::incBookCount();
+  bookType::resetBookCount();
 
   while(!input.eof())
   {
@@ -116,15 +91,20 @@ void loadBooks(bookType **books)
     input >> tempRetail;
     input.ignore();
 
-    books[bookType::getBookCount()] = new bookType;
-    books[bookType::getBookCount()]->setTitle(tempTitle);
-    books[bookType::getBookCount()]->setISBN(tempIsbn);
-    books[bookType::getBookCount()]->setAuthor(tempAuthor);
-    books[bookType::getBookCount()]->setPub(tempPublisher);
-    books[bookType::getBookCount()]->setDateAdded(tempDate);
-    books[bookType::getBookCount()]->setQtyOnHand(tempQty);
-    books[bookType::getBookCount()]->setWholesale(tempWholesale);
-    books[bookType::getBookCount()]->setRetail(tempRetail);
+    bookType tempBook(tempTitle, tempIsbn, tempAuthor, tempPublisher, tempDate,
+      tempQty, tempWholesale, tempRetail);
+
+    books.insert(tempBook, 1);
+
+    // books[bookType::getBookCount()] = new bookType;
+    // books[bookType::getBookCount()]->setTitle(tempTitle);
+    // books[bookType::getBookCount()]->setISBN(tempIsbn);
+    // books[bookType::getBookCount()]->setAuthor(tempAuthor);
+    // books[bookType::getBookCount()]->setPub(tempPublisher);
+    // books[bookType::getBookCount()]->setDateAdded(tempDate);
+    // books[bookType::getBookCount()]->setQtyOnHand(tempQty);
+    // books[bookType::getBookCount()]->setWholesale(tempWholesale);
+    // books[bookType::getBookCount()]->setRetail(tempRetail);
 
     bookType::incBookCount();
 
@@ -134,22 +114,26 @@ void loadBooks(bookType **books)
 
   input.close();
 }
-void saveBooks(bookType **books)
+void saveBooks(orderedLinkedList<bookType> &books)
 {
   ofstream output;
 
   output.open("database.txt");
 
+  linkedListIterator<bookType> iterator = books.begin();
+
   for(int i = 0; i < bookType::getBookCount(); i++)
   {
-    output << books[i]->getTitle() << endl;
-    output << books[i]->getISBN() << endl;
-    output << books[i]->getAuthor() << endl;
-    output << books[i]->getPub() << endl;
-    output << books[i]->getDateAdded() << endl;
-    output << books[i]->getQtyOnHand() << endl;
-    output << books[i]->getWholesale() << endl;
-    output << books[i]->getRetail() << endl;
+    output << (*iterator).getTitle() << endl;
+    output << (*iterator).getISBN() << endl;
+    output << (*iterator).getAuthor() << endl;
+    output << (*iterator).getPub() << endl;
+    output << (*iterator).getDateAdded() << endl;
+    output << (*iterator).getQtyOnHand() << endl;
+    output << (*iterator).getWholesale() << endl;
+    output << (*iterator).getRetail() << endl;
+
+    ++iterator;
   }
 
   output.close();

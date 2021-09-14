@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void invMenu(bookType **books){
+void invMenu(orderedLinkedList<bookType> &books){
   int input = 0;
 
   while(input != 5)
@@ -33,7 +33,7 @@ void invMenu(bookType **books){
         lookUpBook(books, 1, "");
         break;
       case 2:
-        addBook(books, 1, 0);
+        addBook(books, 1, nullptr);
         break;
       case 3:
         editBook(books);
@@ -45,10 +45,11 @@ void invMenu(bookType **books){
   }
 }
 
-int lookUpBook(bookType **books, int code, string key)
+nodeType<bookType>* lookUpBook(orderedLinkedList<bookType> &books, int code, string key)
 {
   string search = "";
-  vector<int> indexes;
+  // vector<int> indexes;
+  vector<nodeType<bookType>*> indexes;
   char ch = 'z';
   char ch2 = 'q';
   char ch3 = 'x';
@@ -65,14 +66,19 @@ int lookUpBook(bookType **books, int code, string key)
   {
     search = key;
   }
-  for(int i = 0; i < bookType::getBookCount(); i++)
-  {
-    if(books[i]->getTitle().find(search) != string::npos || books[i]->getISBN().find(search) != string::npos
-    || books[i]->getPub().find(search) != string::npos || books[i]->getAuthor().find(search) != string::npos)
-    {
-      indexes.push_back(i);
-    }
-  }
+  // for(int i = 0; i < bookType::getBookCount(); i++)
+  // {
+  //   if(books[i]->getTitle().find(search) != string::npos || books[i]->getISBN().find(search) != string::npos
+  //   || books[i]->getPub().find(search) != string::npos || books[i]->getAuthor().find(search) != string::npos)
+  //   {
+  //     indexes.push_back(i);
+  //   }
+  // }
+  bookType tempBook;
+  tempBook.setTitle(search);
+  tempBook.setISBN(search);
+
+  indexes = books.search(tempBook);
 
   if(indexes.size() > 0)
   {
@@ -83,8 +89,8 @@ int lookUpBook(bookType **books, int code, string key)
         return indexes[index];
       }
       do{
-        cout << endl << "Result: " << books[indexes[x]]->getTitle() << ", "
-         << books[indexes[x]]->getISBN() << endl;
+        cout << endl << "Result: " << indexes[x]->info.getTitle() << ", "
+         << indexes[x]->info.getISBN() << endl;
         cout << "View this book record? <Y/N>: ";
         cin >> ch;
 
@@ -97,7 +103,7 @@ int lookUpBook(bookType **books, int code, string key)
       }while(toupper(ch) != 'Y' && toupper(ch) != 'N');
       if(done)
       {
-        books[indexes[index]]->print();
+        indexes[index]->info.print();
         if(code == 1)
         {
           cin.ignore();
@@ -126,7 +132,8 @@ int lookUpBook(bookType **books, int code, string key)
             cout << "Book deleted." << endl;
             bookType::decBookCount();
 
-            removeBook(books, indexes[index]);
+            //removeBook(books, indexes[index]);
+            books.deleteNode(indexes[index]->info, 1);
 
             if(bookType::getBookCount() != 0)
             {
@@ -160,10 +167,10 @@ int lookUpBook(bookType **books, int code, string key)
     cin.get();
   }
   indexes.clear();
-  return -1;
+  return nullptr;
 }
-void addBook(bookType **books, int code, int index){
-  if(bookType::getBookCount() < 20)
+void addBook(orderedLinkedList<bookType> &books, int code, nodeType<bookType>* index){
+  if(bookType::getBookCount() < DB_SIZE)
   {
     string tempTitle = "EMPTY";
     string tempISBN = "EMPTY";
@@ -185,14 +192,14 @@ void addBook(bookType **books, int code, int index){
     }
     else{
       action = "Edit";
-      tempTitle = books[index]->getTitle();
-      tempISBN = books[index]->getISBN();
-      tempAuthor = books[index]->getAuthor();
-      tempPublisher = books[index]->getPub();
-      tempDate = books[index]->getDateAdded();
-      tempQty = books[index]->getQtyOnHand();
-      tempWholesale = books[index]->getWholesale();
-      tempRetail = books[index]->getRetail();
+      tempTitle = index->info.getTitle();
+      tempISBN = index->info.getISBN();
+      tempAuthor = index->info.getAuthor();
+      tempPublisher = index->info.getPub();
+      tempDate = index->info.getDateAdded();
+      tempQty = index->info.getQtyOnHand();
+      tempWholesale = index->info.getWholesale();
+      tempRetail = index->info.getRetail();
     }
 
     while(choice != 0 && !exit)
@@ -282,19 +289,21 @@ void addBook(bookType **books, int code, int index){
           changed = true;
           break;
         case 9:
-          if(bookType::getBookCount() < 20)
+          if(bookType::getBookCount() < DB_SIZE)
           {
             if(code == 1)
             {
-              books[bookType::getBookCount()] = new bookType;
-              books[bookType::getBookCount()]->setTitle(tempTitle);
-              books[bookType::getBookCount()]->setISBN(tempISBN);
-              books[bookType::getBookCount()]->setAuthor(tempAuthor);
-              books[bookType::getBookCount()]->setPub(tempPublisher);
-              books[bookType::getBookCount()]->setDateAdded(tempDate);
-              books[bookType::getBookCount()]->setQtyOnHand(tempQty);
-              books[bookType::getBookCount()]->setWholesale(tempWholesale);
-              books[bookType::getBookCount()]->setRetail(tempRetail);
+              // books[bookType::getBookCount()] = new bookType;
+              // books[bookType::getBookCount()]->setTitle(tempTitle);
+              // books[bookType::getBookCount()]->setISBN(tempISBN);
+              // books[bookType::getBookCount()]->setAuthor(tempAuthor);
+              // books[bookType::getBookCount()]->setPub(tempPublisher);
+              // books[bookType::getBookCount()]->setDateAdded(tempDate);
+              // books[bookType::getBookCount()]->setQtyOnHand(tempQty);
+              // books[bookType::getBookCount()]->setWholesale(tempWholesale);
+              // books[bookType::getBookCount()]->setRetail(tempRetail);
+              bookType tempBook(tempTitle, tempISBN, tempAuthor, tempPublisher, tempDate, tempQty, tempWholesale, tempRetail);
+              books.insert(tempBook, 1);
 
               cout << "Book added!";
               cin.get();
@@ -303,14 +312,14 @@ void addBook(bookType **books, int code, int index){
             }
             else if(code == 2)
             {
-              books[index]->setTitle(tempTitle);
-              books[index]->setISBN(tempISBN);
-              books[index]->setAuthor(tempAuthor);
-              books[index]->setPub(tempPublisher);
-              books[index]->setDateAdded(tempDate);
-              books[index]->setQtyOnHand(tempQty);
-              books[index]->setWholesale(tempWholesale);
-              books[index]->setRetail(tempRetail);
+              index->info.setTitle(tempTitle);
+              index->info.setISBN(tempISBN);
+              index->info.setAuthor(tempAuthor);
+              index->info.setPub(tempPublisher);
+              index->info.setDateAdded(tempDate);
+              index->info.setQtyOnHand(tempQty);
+              index->info.setWholesale(tempWholesale);
+              index->info.setRetail(tempRetail);
 
               cout << "Book saved!";
               cin.get();
@@ -352,7 +361,7 @@ void addBook(bookType **books, int code, int index){
     cin.get();
   }
 }
-void editBook(bookType **books){
+void editBook(orderedLinkedList<bookType> &books){
   cout << "\033[2J\033[1;1H";
   cout << "Serendipity Booksellers" << endl;
   cout << " Edit Book" << endl << endl;
@@ -361,7 +370,7 @@ void editBook(bookType **books){
 
   lookUpBook(books, 2, "");
 }
-void deleteBook(bookType **books){
+void deleteBook(orderedLinkedList<bookType> &books){
   cout << "\033[2J\033[1;1H";
   cout << "Serendipity Booksellers" << endl;
   cout << " Delete Book" << endl << endl;
@@ -371,25 +380,17 @@ void deleteBook(bookType **books){
   lookUpBook(books, 3, "");
 }
 
-int isEmpty(bookType **books, int index)
-{
-  if(books[index]->getTitle().at(0) == '\0')
-  {
-    return 1;
-  }
-  return 0;
-}
-void removeBook(bookType **books, int index)
-{
-  for(int i = index; i < bookType::getBookCount(); i++)
-  {
-    books[i]->setTitle(books[i+1]->getTitle());
-    books[i]->setISBN(books[i+1]->getISBN());
-    books[i]->setAuthor(books[i+1]->getAuthor());
-    books[i]->setPub(books[i+1]->getPub());
-    books[i]->setDateAdded(books[i+1]->getDateAdded());
-    books[i]->setQtyOnHand(books[i+1]->getQtyOnHand());
-    books[i]->setWholesale(books[i+1]->getWholesale());
-    books[i]->setRetail(books[i+1]->getRetail());
-  }
-}
+// void removeBook(bookType **books, int index)
+// {
+//   for(int i = index; i < bookType::getBookCount(); i++)
+//   {
+//     books[i]->setTitle(books[i+1]->getTitle());
+//     books[i]->setISBN(books[i+1]->getISBN());
+//     books[i]->setAuthor(books[i+1]->getAuthor());
+//     books[i]->setPub(books[i+1]->getPub());
+//     books[i]->setDateAdded(books[i+1]->getDateAdded());
+//     books[i]->setQtyOnHand(books[i+1]->getQtyOnHand());
+//     books[i]->setWholesale(books[i+1]->getWholesale());
+//     books[i]->setRetail(books[i+1]->getRetail());
+//   }
+// }

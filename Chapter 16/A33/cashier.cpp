@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void cashier(bookType **books){
+void cashier(orderedLinkedList<bookType> &books){
   string date;
   int qty = 0;
   string isbn;
@@ -10,15 +10,15 @@ void cashier(bookType **books){
   double tax = 0.0;
   double subtotal = 0.0;
   char ch = 'n';
-  int index = -1;
   char another = 'z';
   bool repeat = false;
   int repeatIndex = -1;
   char purchase = 'n';
 
   vector<int> quantities;
-  vector<int> indexes;
+  vector<nodeType<bookType>*> indexes;
   vector<double> prices;
+  nodeType<bookType>* nodeTemp = nullptr;
 
   do{
     if(toupper(ch) == 'Y')
@@ -46,18 +46,18 @@ void cashier(bookType **books){
     cin >> price;
 
     cout << endl;
-    index = lookUpBook(books, 4, isbn);
+    nodeTemp = lookUpBook(books, 4, isbn);
 
-    if(index < 0)
+    if(nodeTemp == nullptr)
     {
       cin.get();
     }
-    else if(index != -1)
+    else if(nodeTemp != nullptr)
     {
       repeat = false;
       for(int i = 0; i < (int)indexes.size(); i++)
       {
-        if(books[indexes[i]]->getISBN() == isbn)
+        if(nodeTemp->info.getISBN() == isbn)
         {
           repeatIndex = i;
           repeat = true;
@@ -70,11 +70,9 @@ void cashier(bookType **books){
       }
       else{
         quantities.push_back(qty);
-        indexes.push_back(index);
+        indexes.push_back(nodeTemp);
         prices.push_back(price);
       }
-
-      //books[index]->qtyOnHand -= qty;
 
       cout << "Do you want to add another book to this purchase? <y/n> ";
       another = 'z';
@@ -105,8 +103,8 @@ void cashier(bookType **books){
         total = quantities[i] * prices[i];
         subtotal += total;
 
-        cout << setw(4) << left << quantities[i] << setw(14) << books[indexes[i]]->getISBN()
-        << setw(30) << books[indexes[i]]->getTitle() << "$" << right << setw(6)
+        cout << setw(4) << left << quantities[i] << setw(14) << indexes[i]->info.getISBN()
+        << setw(30) << indexes[i]->info.getTitle() << "$" << right << setw(6)
         << fixed << setprecision(2) << prices[i] << " " << setw(8) << "$" << setw(6) << fixed
         << setprecision(2) << right << total << endl;
       }
@@ -134,7 +132,7 @@ void cashier(bookType **books){
         purchase = 'n';
         for(int i = 0; i < (int)indexes.size(); i++)
         {
-          books[indexes[i]]->setQtyOnHand(books[indexes[i]]->getQtyOnHand() - quantities[i]);
+          indexes[i]->info.setQtyOnHand(indexes[i]->info.getQtyOnHand() - quantities[i]);
         }
       }
 

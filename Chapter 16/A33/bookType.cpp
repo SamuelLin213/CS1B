@@ -59,40 +59,40 @@ void bookType::setRetail(float dbl)
   retail = dbl;
 }
 
-const string bookType::getTitle()
+const string bookType::getTitle() const
 {
   return bookTitle;
 }
-const string bookType::getISBN()
+const string bookType::getISBN() const
 {
   return isbn;
 }
-const string bookType::getAuthor()
+const string bookType::getAuthor() const
 {
   return author;
 }
-const string bookType::getPub()
+const string bookType::getPub() const
 {
   return publisher;
 }
-const string bookType::getDateAdded()
+const string bookType::getDateAdded() const
 {
   return dateAdded;
 }
-const int bookType::getQtyOnHand()
+const int bookType::getQtyOnHand() const
 {
   return qtyOnHand;
 }
-const float bookType::getWholesale()
+const float bookType::getWholesale() const
 {
   return wholesale;
 }
-const float bookType::getRetail()
+const float bookType::getRetail() const
 {
   return retail;
 }
 
-const int bookType::getBookCount()
+int bookType::getBookCount()
 {
   return bookCount;
 }
@@ -103,6 +103,10 @@ void bookType::incBookCount()
 void bookType::decBookCount()
 {
   bookCount -= 1;
+}
+void bookType::resetBookCount()
+{
+  bookCount = 0;
 }
 
 void bookType::print()

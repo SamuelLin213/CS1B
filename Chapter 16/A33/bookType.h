@@ -25,18 +25,19 @@ class bookType
     void setWholesale(float dbl);
     void setRetail(float dbl);
 
-    const string getTitle();
-    const string getISBN();
-    const string getAuthor();
-    const string getPub();
-    const string getDateAdded();
-    const int getQtyOnHand();
-    const float getWholesale();
-    const float getRetail();
+    const string getTitle() const;
+    const string getISBN() const;
+    const string getAuthor() const;
+    const string getPub() const;
+    const string getDateAdded() const;
+    const int getQtyOnHand() const;
+    const float getWholesale() const;
+    const float getRetail() const;
 
-    static const int getBookCount();
+    static int getBookCount();
     static void incBookCount();
     static void decBookCount();
+    static void resetBookCount();
 
     void print();
     bool equals(bookType other);

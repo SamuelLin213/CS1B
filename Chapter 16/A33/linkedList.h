@@ -113,13 +113,13 @@ class linkedListType
       return last->info;
     }
 
-    virtual bool search(const Type& searchItem) const = 0;
+    virtual vector<nodeType<Type>*> search(const Type& searchItem) const = 0;
 
     virtual void insertFirst(const Type& newItem) = 0;
 
     virtual void insertLast(const Type& newItem) = 0;
 
-    virtual void deleteNode(const Type& deleteItem) = 0;
+    virtual void deleteNode(const Type& deleteItem, int code) = 0;
 
     linkedListIterator<Type> begin()
     {
