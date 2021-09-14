@@ -37,7 +37,6 @@ class bookType
     static int getBookCount();
     static void incBookCount();
     static void decBookCount();
-    static void resetBookCount();
 
     void print();
     bool equals(bookType other);

@@ -104,10 +104,6 @@ void bookType::decBookCount()
 {
   bookCount -= 1;
 }
-void bookType::resetBookCount()
-{
-  bookCount = 0;
-}
 
 void bookType::print()
 {

@@ -53,7 +53,7 @@ int main(){
     }
   }
 
-  saveBooks(books);
+  //saveBooks(books);
 
   // for(int i = 0; i < bookType::getBookCount(); i++)
   // {
@@ -76,9 +76,8 @@ void loadBooks(orderedLinkedList<bookType> &books)
 
   input.open("database.txt");
 
-  bookType::resetBookCount();
-
-  while(!input.eof())
+  // while(!input.eof())
+  for(int i = 0; i < 125; i++)
   {
     getline(input, tempTitle);
     input >> tempIsbn;
@@ -108,8 +107,8 @@ void loadBooks(orderedLinkedList<bookType> &books)
 
     bookType::incBookCount();
 
-    if(input.eof())
-      break;
+    // if(input.eof())
+    //   break;
   }
 
   input.close();
