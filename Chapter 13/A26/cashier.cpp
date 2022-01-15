@@ -106,7 +106,7 @@ void cashier(bookType **books){
         subtotal += total;
 
         cout << setw(4) << left << quantities[i] << setw(14) << books[indexes[i]]->getISBN()
-        << setw(30) << books[indexes[i]]->getTitle() << "$" << right << setw(6)
+        << setw(30) << books[indexes[i]]->getTitle().substr(0, 29) << "$" << right << setw(6)
         << fixed << setprecision(2) << prices[i] << " " << setw(8) << "$" << setw(6) << fixed
         << setprecision(2) << right << total << endl;
       }
